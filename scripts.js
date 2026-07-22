@@ -88,53 +88,6 @@
       viewTriggeredTitles.forEach((titleElement) => runTitleOnce(titleElement, 58));
     }
 
-    const heroModel = document.getElementById("heroModel");
-    const modelStatus = document.getElementById("modelStatus");
-    const modelStatusText = document.getElementById("modelStatusText");
-
-    if (heroModel && modelStatus && modelStatusText) {
-      let hideStatusTimer = null;
-
-      function updateModelStatus(message, state = "") {
-        modelStatusText.textContent = message;
-        modelStatus.classList.remove("is-ready", "is-error");
-
-        if (state) {
-          modelStatus.classList.add(state);
-        }
-      }
-
-      heroModel.addEventListener("load", () => {
-        updateModelStatus("3D model ready", "is-ready");
-        window.clearTimeout(hideStatusTimer);
-        hideStatusTimer = window.setTimeout(() => {
-          modelStatus.style.opacity = "0.62";
-        }, 2600);
-      });
-
-      heroModel.addEventListener("error", () => {
-        updateModelStatus("Add model.glb beside index.html", "is-error");
-        modelStatus.style.opacity = "1";
-      });
-
-      heroModel.addEventListener("progress", (event) => {
-        if (event.detail.totalProgress < 1) {
-          const percent = Math.round(event.detail.totalProgress * 100);
-          updateModelStatus(`Loading 3D model… ${percent}%`);
-        }
-      });
-
-      heroModel.addEventListener("camera-change", (event) => {
-        if (event.detail.source === "user-interaction") {
-          modelStatus.style.opacity = "0.35";
-        }
-      });
-
-      heroModel.addEventListener("interact-stopped", () => {
-        modelStatus.style.opacity = "0.62";
-      });
-    }
-
     const contactForm = document.getElementById("contactForm");
     const formMessage = document.getElementById("formMessage");
 

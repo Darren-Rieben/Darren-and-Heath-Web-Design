@@ -30,33 +30,30 @@
     <section class="snap-section" id="divider-1">
       <div class="section-inner hero-layout">
         <div class="hero-copy">
-          <p class="eyebrow">Modern web design studio</p>
-          <h1 class="typed-title" data-text="Do web design different with us" aria-label="Do web design different with us">
-            <span class="typed-content">Do web design different with us</span><span class="typing-cursor" aria-hidden="true">|</span>
+          <h1 class="typed-title" data-text="Do web design differently, with us" aria-label="Do web design differently, with us">
+            <span class="typed-content">Do web design differently, with us</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h1>
           <p>
-            Minimal and bold websites built to stand out. Drag the interactive 3D model to inspect it from every angle,
-            or let it orbit slowly on its own.
+            Help your business stand out with a clean, modern website that is easy to navigate and optimized for conversions. We focus on creating a unique brand identity and user experience that resonates with your customers.
           </p>
         </div>
 
         <div class="scan-shell" aria-label="Interactive 3D model viewer">
-          <div class="scan-overlay"></div>
-
           <model-viewer
             id="heroModel"
             class="hero-model"
             src="assets/3dmodel.glb"
-            alt="Interactive 3D model. Drag to rotate and scroll or pinch to zoom."
+            alt="Interactive 3D model."
             loading="eager"
             reveal="auto"
             camera-controls
             auto-rotate
             auto-rotate-delay="1400"
             rotation-per-second="8deg"
-            interaction-prompt="auto"
+            interaction-prompt="none"
             interaction-prompt-style="basic"
             interaction-prompt-threshold="1800"
+            disable-zoom
             touch-action="pan-y"
             shadow-intensity="1.25"
             shadow-softness="0.8"
@@ -68,18 +65,7 @@
             min-field-of-view="20deg"
             max-field-of-view="55deg"
             interpolation-decay="90"
-          >
-            <div class="model-progress" slot="progress-bar" aria-hidden="true">
-              <div class="model-progress__bar"></div>
-            </div>
-          </model-viewer>
-
-          <div class="model-status" id="modelStatus" aria-live="polite">
-            <span class="model-status__dot" aria-hidden="true"></span>
-            <span id="modelStatusText">Loading 3D model…</span>
-          </div>
-
-          <p class="model-hint">Drag to orbit · Scroll or pinch to zoom</p>
+          ></model-viewer>
         </div>
       </div>
     </section>
@@ -87,7 +73,6 @@
     <section class="snap-section" id="divider-2">
       <div class="section-inner portfolio-layout">
         <div>
-          <p class="eyebrow">Selected work</p>
           <h2 class="typed-title" data-text="Our Portfolio" data-animate-on-view="true">
             <span class="typed-content">Our Portfolio</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
@@ -137,7 +122,6 @@
     <section class="snap-section" id="divider-3">
       <div class="section-inner testimonial-shell">
         <div>
-          <p class="eyebrow">Client feedback</p>
           <h2 class="typed-title" data-text="What our clients have said about us. . ." data-animate-on-view="true">
             <span class="typed-content">What our clients have said about us. . .</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
@@ -163,7 +147,6 @@
     <section class="snap-section" id="divider-4">
       <div class="section-inner contact-layout">
         <div>
-          <p class="eyebrow">Start a project</p>
           <h2 class="typed-title" data-text="Contact Us" data-animate-on-view="true">
             <span class="typed-content">Contact Us</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
@@ -209,6 +192,6 @@
     </p>
   </footer>
 
-  <script src="script.js?v=3" defer></script>
+  <script src="scripts.js?v=3" defer></script>
 </body>
 </html>
