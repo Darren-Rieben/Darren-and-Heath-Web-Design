@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Darren and Heath Web Design creates modern, minimal websites built to stand out.">
+  <title>Darren and Heath Web Design</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
+</head>
+<body>
+  <div class="grid-background" aria-hidden="true">
+    <div class="grid-background__grid"></div>
+    <div class="grid-background__sweep"></div>
+    <div class="grid-background__focus"></div>
+    <div class="grid-background__ring grid-background__ring--one"></div>
+    <div class="grid-background__ring grid-background__ring--two"></div>
+  </div>
+
+  <header class="site-header">
+    <a class="site-brand" href="#divider-1">Darren and Heath Web Design</a>
+    <nav class="header-nav" aria-label="Primary navigation">
+      <a href="#divider-2">Our Portfolio</a>
+      <a href="#divider-3">Clients</a>
+      <a href="#divider-4">Contact Us</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="snap-section" id="divider-1">
+      <div class="section-inner hero-layout">
+        <div class="hero-copy">
+          <p class="eyebrow">Modern web design studio</p>
+          <h1 class="typed-title" data-text="Do web design different with us" aria-label="Do web design different with us">
+            <span class="typed-content">Do web design different with us</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h1>
+          <p>
+            Minimal and bold websites built to stand out. Drag the interactive 3D model to inspect it from every angle,
+            or let it orbit slowly on its own.
+          </p>
+        </div>
+
+        <div class="scan-shell" aria-label="Interactive 3D model viewer">
+          <div class="scan-overlay"></div>
+
+          <model-viewer
+            id="heroModel"
+            class="hero-model"
+            src="assets/3dmodel.glb"
+            alt="Interactive 3D model. Drag to rotate and scroll or pinch to zoom."
+            loading="eager"
+            reveal="auto"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="1400"
+            rotation-per-second="8deg"
+            interaction-prompt="auto"
+            interaction-prompt-style="basic"
+            interaction-prompt-threshold="1800"
+            touch-action="pan-y"
+            shadow-intensity="1.25"
+            shadow-softness="0.8"
+            exposure="1.15"
+            environment-image="neutral"
+            camera-orbit="30deg 72deg 105%"
+            min-camera-orbit="auto 25deg 55%"
+            max-camera-orbit="auto 155deg 220%"
+            min-field-of-view="20deg"
+            max-field-of-view="55deg"
+            interpolation-decay="90"
+          >
+            <div class="model-progress" slot="progress-bar" aria-hidden="true">
+              <div class="model-progress__bar"></div>
+            </div>
+          </model-viewer>
+
+          <div class="model-status" id="modelStatus" aria-live="polite">
+            <span class="model-status__dot" aria-hidden="true"></span>
+            <span id="modelStatusText">Loading 3D model…</span>
+          </div>
+
+          <p class="model-hint">Drag to orbit · Scroll or pinch to zoom</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="snap-section" id="divider-2">
+      <div class="section-inner portfolio-layout">
+        <div>
+          <p class="eyebrow">Selected work</p>
+          <h2 class="typed-title" data-text="Our Portfolio" data-animate-on-view="true">
+            <span class="typed-content">Our Portfolio</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h2>
+          <p>
+            Example websites will appear here. Add screenshots, links, and details for each project to showcase
+            your style and results.
+          </p>
+        </div>
+
+        <div class="portfolio-grid" aria-label="Portfolio projects">
+          <article class="portfolio-card featured">
+            <a class="portfolio-preview-link" href="https://lakenormanboatdetailing.com/" target="_blank" rel="noopener noreferrer">
+              <div class="portfolio-preview-frame-wrap">
+                <iframe
+                  class="portfolio-preview-frame"
+                  src="https://lakenormanboatdetailing.com/"
+                  title="Lake Norman Boat Detailing live site preview"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+                <div class="portfolio-preview-overlay" aria-hidden="true"></div>
+              </div>
+            </a>
+          </article>
+
+          <article class="portfolio-card featured">
+            <a class="portfolio-preview-link" href="https://heathlyon.github.io/HeathLyonPortfolio/" target="_blank" rel="noopener noreferrer">
+              <div class="portfolio-preview-frame-wrap">
+                <iframe
+                  class="portfolio-preview-frame"
+                  src="https://heathlyon.github.io/HeathLyonPortfolio/"
+                  title="Heath Lyon Portfolio live site preview"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+                <div class="portfolio-preview-overlay" aria-hidden="true"></div>
+              </div>
+            </a>
+          </article>
+
+          <article class="portfolio-card">Example Site Three</article>
+          <article class="portfolio-card">Example Site Four</article>
+        </div>
+      </div>
+    </section>
+
+    <section class="snap-section" id="divider-3">
+      <div class="section-inner testimonial-shell">
+        <div>
+          <p class="eyebrow">Client feedback</p>
+          <h2 class="typed-title" data-text="What our clients have said about us. . ." data-animate-on-view="true">
+            <span class="typed-content">What our clients have said about us. . .</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h2>
+        </div>
+
+        <article class="testimonial">
+          <p>
+            “Their process was smooth and focused. The final website looked clean, unique, and converted better
+            than our old one.”
+          </p>
+          <strong>Client Placeholder</strong>
+        </article>
+
+        <article class="testimonial">
+          <p>
+            “Fast communication, strong design instincts, and exactly the kind of minimal brand feel we wanted.”
+          </p>
+          <strong>Client Placeholder</strong>
+        </article>
+      </div>
+    </section>
+
+    <section class="snap-section" id="divider-4">
+      <div class="section-inner contact-layout">
+        <div>
+          <p class="eyebrow">Start a project</p>
+          <h2 class="typed-title" data-text="Contact Us" data-animate-on-view="true">
+            <span class="typed-content">Contact Us</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h2>
+          <p>Send your project details and we will reach out with next steps.</p>
+        </div>
+
+        <form class="contact-form" id="contactForm">
+          <label>
+            Name of Business
+            <input type="text" name="businessName" required>
+          </label>
+
+          <label>
+            Business Description
+            <textarea name="description" required></textarea>
+          </label>
+
+          <label>
+            What do you need?
+            <textarea name="needs" required></textarea>
+          </label>
+
+          <label>
+            Contact Info (email or phone)
+            <input type="text" name="contactInfo" required>
+          </label>
+
+          <button type="submit">Send Request</button>
+          <p class="form-message" id="formMessage" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Contact us:
+      <a href="mailto:info@darrenandheath.com">info@darrenandheath.com</a>
+      <span aria-hidden="true"> | </span>
+      <a href="mailto:darrenheathwebdev@gmail.com">darrenheathwebdev@gmail.com</a>
+      <span aria-hidden="true"> | </span>
+      <a href="tel:9805407648">980-540-7648</a>
+    </p>
+  </footer>
+
+  <script src="script.js?v=3" defer></script>
+</body>
+</html>
