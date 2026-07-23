@@ -95,10 +95,12 @@
   function initRevealAnimations(prefersReducedMotion) {
     const revealItems = [...document.querySelectorAll("[data-reveal]")];
 
-    revealItems.forEach((item, index) => {
-      const group = item.closest(".portfolio-grid, .testimonial-grid");
+    revealItems.forEach((item) => {
+      const customDelay = Number.parseInt(item.dataset.revealDelay || "", 10);
+      const group = item.closest(".portfolio-grid, .testimonial-grid, .about-people");
       const groupIndex = group ? [...group.querySelectorAll("[data-reveal]")].indexOf(item) : 0;
-      item.style.transitionDelay = `${Math.min(groupIndex * 90, 270)}ms`;
+      const delay = Number.isFinite(customDelay) ? customDelay : Math.min(groupIndex * 90, 270);
+      item.style.transitionDelay = `${delay}ms`;
     });
 
     document.body.classList.add("reveal-ready");
@@ -279,7 +281,7 @@
   function initMagneticInteractions(prefersReducedMotion) {
     const aura = document.getElementById("cursorAura");
     const magneticElements = [...document.querySelectorAll(".magnetic")];
-    const glowSurfaces = [...document.querySelectorAll(".portfolio-card, .testimonial, .contact-form")];
+    const glowSurfaces = [...document.querySelectorAll(".portfolio-card, .testimonial, .contact-form, .about-person")];
 
     if (prefersReducedMotion || !pointerQuery.matches) {
       return;

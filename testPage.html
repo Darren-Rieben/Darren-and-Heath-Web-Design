@@ -110,47 +110,67 @@
       </div>
     </section>
 
-    <section class="snap-section" id="divider-3">
+    <section class="snap-section about-section" id="divider-3">
       <div class="section-inner about-layout">
-        <div class="scan-shell" aria-label="Interactive 3D model viewer" data-reveal="left">
-          <model-viewer
-            id="heroModel"
-            class="hero-model"
-            src="assets/3dmodel.glb"
-            alt="Interactive 3D model."
-            loading="eager"
-            reveal="auto"
-            camera-controls
-            auto-rotate
-            auto-rotate-delay="1400"
-            rotation-per-second="8deg"
-            interaction-prompt="none"
-            disable-zoom
-            touch-action="pan-y"
-            shadow-intensity="1.1"
-            shadow-softness="0.9"
-            exposure="1.08"
-            environment-image="neutral"
-            camera-orbit="30deg 72deg 105%"
-            min-camera-orbit="auto 25deg 55%"
-            max-camera-orbit="auto 155deg 220%"
-            min-field-of-view="20deg"
-            max-field-of-view="55deg"
-            interpolation-decay="90"
-          ></model-viewer>
-        </div>
-
-        <div class="section-copy" data-reveal="right">
-          <p class="eyebrow">Small studio, direct process</p>
-          <h2 class="typed-title" data-text="About us" data-animate-on-view="true">
-            <span class="typed-content">About us</span><span class="typing-cursor" aria-hidden="true">|</span>
+        <div class="about-heading" data-reveal="top">
+          <p class="eyebrow">The people behind the work</p>
+          <h2 class="typed-title" data-text="Meet us" data-animate-on-view="true">
+            <span class="typed-content">Meet us</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
           <p>
-            Darren and Heath work directly with each client from early concept through launch. That keeps communication fast, decisions clear, and the final website aligned with the business it represents.
+            Work directly with the people designing and building your website. Clear communication, focused decisions, and no unnecessary layers.
           </p>
-          <p>
-            Our approach combines modern design, responsive development, practical SEO foundations, and a streamlined handoff that makes the finished site easy to maintain.
-          </p>
+        </div>
+
+        <div class="about-people">
+          <article class="about-person about-person--darren magnetic" data-reveal="person-left" data-reveal-delay="90">
+            <p class="about-role">Co-founder</p>
+            <h3 class="about-name">Darren Rieben</h3>
+            <p>
+              Add Darren’s introduction here. Use this space to explain his role, experience, strengths, and the perspective he brings to each client project.
+            </p>
+          </article>
+
+          <div class="about-model" data-reveal="model" data-reveal-delay="230">
+            <div class="model-frame">
+              <div class="scan-shell" aria-label="Interactive 3D model viewer">
+                <model-viewer
+                  id="heroModel"
+                  class="hero-model"
+                  src="assets/3dmodel.glb"
+                  alt="Interactive 3D model representing Darren and Heath Web Design."
+                  loading="eager"
+                  reveal="auto"
+                  camera-controls
+                  auto-rotate
+                  auto-rotate-delay="1400"
+                  rotation-per-second="8deg"
+                  interaction-prompt="none"
+                  disable-zoom
+                  touch-action="pan-y"
+                  shadow-intensity="1.1"
+                  shadow-softness="0.9"
+                  exposure="1.08"
+                  environment-image="neutral"
+                  camera-orbit="30deg 72deg 105%"
+                  min-camera-orbit="auto 25deg 55%"
+                  max-camera-orbit="auto 155deg 220%"
+                  min-field-of-view="20deg"
+                  max-field-of-view="55deg"
+                  interpolation-decay="90"
+                ></model-viewer>
+              </div>
+              <p class="model-caption">Drag to explore</p>
+            </div>
+          </div>
+
+          <article class="about-person about-person--heath magnetic" data-reveal="person-right" data-reveal-delay="370">
+            <p class="about-role">Co-founder</p>
+            <h3 class="about-name">Heath Lyon</h3>
+            <p>
+              Add Heath’s introduction here. Use this space to describe his design, development, technical skills, and the value he brings to client work.
+            </p>
+          </article>
         </div>
       </div>
     </section>
@@ -228,6 +248,6 @@
     </p>
   </footer>
 
-  <script src="scripts2.js?v=5" defer></script>
+  <script src="scripts2.js?v=6" defer></script>
 </body>
 </html>
