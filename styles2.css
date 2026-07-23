@@ -33,7 +33,7 @@ body {
   overflow-y: auto;
   color: var(--text);
   background: var(--bg);
-  font-family: Inter, "Avenir Next", "Segoe UI", sans-serif;
+  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
   line-height: 1.55;
   scroll-snap-type: y proximity;
 }
@@ -320,7 +320,6 @@ p {
 }
 
 .portfolio-layout,
-.about-layout,
 .contact-layout {
   display: grid;
   grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
@@ -502,8 +501,219 @@ p {
   display: none;
 }
 
-.about-layout .section-copy p + p {
-  margin-top: 16px;
+
+
+/* Meet Us composition */
+.about-section {
+  overflow: hidden;
+}
+
+.about-layout {
+  display: grid;
+  gap: clamp(42px, 6vw, 78px);
+}
+
+.about-heading {
+  max-width: 760px;
+  margin: 0 auto;
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.about-heading h2 {
+  font-size: clamp(2.4rem, 6vw, 5.6rem);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+}
+
+.about-heading > p:last-child {
+  max-width: 60ch;
+}
+
+.about-people {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 390px) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(22px, 4vw, 58px);
+  perspective: 1400px;
+}
+
+.about-person {
+  position: relative;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 3vw, 36px);
+  overflow: hidden;
+  border: 1px solid rgba(230, 239, 255, 0.13);
+  border-radius: var(--radius);
+  background: linear-gradient(145deg, rgba(20, 26, 36, 0.72), rgba(9, 13, 20, 0.78));
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  backdrop-filter: blur(18px) saturate(120%);
+  box-shadow: 0 26px 80px rgba(0, 0, 0, 0.27);
+  transition: border-color 240ms ease, box-shadow 240ms ease, background 240ms ease;
+}
+
+.about-person::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(380px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(207, 226, 255, 0.14), transparent 46%);
+  transition: opacity 240ms ease;
+}
+
+.about-person::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 74px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(242, 247, 255, 0.9), transparent);
+  box-shadow: 0 0 20px rgba(210, 228, 255, 0.22);
+}
+
+.about-person--darren::after {
+  left: 28px;
+}
+
+.about-person--heath::after {
+  right: 28px;
+}
+
+.about-person:hover {
+  border-color: rgba(230, 239, 255, 0.28);
+  background: linear-gradient(145deg, rgba(25, 32, 44, 0.8), rgba(11, 15, 23, 0.86));
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.38), 0 0 40px rgba(189, 214, 249, 0.045);
+}
+
+.about-person:hover::before {
+  opacity: 1;
+}
+
+.about-person > * {
+  position: relative;
+  z-index: 1;
+}
+
+.about-role {
+  margin-bottom: 13px;
+  color: var(--accent-soft);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.about-name {
+  margin-bottom: 18px;
+  color: var(--text);
+  font-size: clamp(1.55rem, 2.8vw, 2.35rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+}
+
+.about-person p:last-child {
+  max-width: 38ch;
+  font-size: 0.96rem;
+  line-height: 1.7;
+}
+
+.about-person--darren {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.about-person--heath {
+  text-align: left;
+  align-items: flex-start;
+}
+
+.about-model {
+  position: relative;
+  display: grid;
+  place-items: center;
+  transform-style: preserve-3d;
+}
+
+.model-frame {
+  position: relative;
+  width: 100%;
+  min-height: 430px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(233, 241, 255, 0.13);
+  border-radius: 48% 52% 46% 54% / 54% 46% 54% 46%;
+  background:
+    radial-gradient(circle at 50% 43%, rgba(191, 216, 252, 0.12), transparent 46%),
+    linear-gradient(180deg, rgba(21, 27, 38, 0.4), rgba(7, 10, 16, 0.2));
+  box-shadow:
+    inset 0 0 70px rgba(207, 224, 250, 0.035),
+    0 32px 90px rgba(0, 0, 0, 0.32);
+  isolation: isolate;
+}
+
+.model-frame::before,
+.model-frame::after {
+  content: "";
+  position: absolute;
+  inset: 9%;
+  z-index: -1;
+  border: 1px solid rgba(222, 235, 255, 0.08);
+  border-radius: inherit;
+}
+
+.model-frame::after {
+  inset: 19%;
+  border-color: rgba(222, 235, 255, 0.05);
+}
+
+.about-model .scan-shell {
+  min-height: 390px;
+}
+
+.about-model .scan-shell::before {
+  width: min(38vw, 430px);
+  background: radial-gradient(circle, rgba(184, 209, 245, 0.18), transparent 67%);
+}
+
+.about-model .hero-model {
+  height: 390px;
+}
+
+.model-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 22px;
+  z-index: 2;
+  transform: translateX(-50%);
+  color: rgba(222, 231, 244, 0.62);
+  font-size: 0.62rem;
+  font-weight: 650;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.about-model.is-visible .model-frame {
+  animation: model-float 7s ease-in-out 1s infinite;
+}
+
+@keyframes model-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+    box-shadow: inset 0 0 70px rgba(207, 224, 250, 0.035), 0 32px 90px rgba(0, 0, 0, 0.32);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+    box-shadow: inset 0 0 85px rgba(207, 224, 250, 0.055), 0 42px 110px rgba(0, 0, 0, 0.38);
+  }
 }
 
 .testimonial-shell {
@@ -643,10 +853,16 @@ p {
 [data-reveal] {
   --reveal-x: 0px;
   --reveal-y: 0px;
+  --reveal-scale: 1;
+  --reveal-rotate: 0deg;
   --magnet-x: 0px;
   --magnet-y: 0px;
   --magnet-scale: 1;
-  transform: translate3d(calc(var(--reveal-x) + var(--magnet-x)), calc(var(--reveal-y) + var(--magnet-y)), 0) scale(var(--magnet-scale));
+  transform:
+    translate3d(calc(var(--reveal-x) + var(--magnet-x)), calc(var(--reveal-y) + var(--magnet-y)), 0)
+    rotate(var(--reveal-rotate))
+    scale(var(--reveal-scale))
+    scale(var(--magnet-scale));
   will-change: transform;
 }
 
@@ -678,15 +894,39 @@ p {
   --reveal-y: 42px;
 }
 
+.reveal-ready [data-reveal="top"] {
+  --reveal-y: -38px;
+}
+
+.reveal-ready [data-reveal="person-left"] {
+  --reveal-x: -96px;
+  --reveal-y: 16px;
+  --reveal-rotate: -3deg;
+}
+
+.reveal-ready [data-reveal="person-right"] {
+  --reveal-x: 96px;
+  --reveal-y: 16px;
+  --reveal-rotate: 3deg;
+}
+
+.reveal-ready [data-reveal="model"] {
+  --reveal-y: 58px;
+  --reveal-scale: 0.78;
+}
+
 .reveal-ready [data-reveal].is-visible {
   opacity: 1;
   --reveal-x: 0px;
   --reveal-y: 0px;
+  --reveal-scale: 1;
+  --reveal-rotate: 0deg;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .portfolio-card:hover,
-  .testimonial:hover {
+  .testimonial:hover,
+  .about-person:hover {
     --magnet-scale: 1.012;
   }
 }
@@ -697,6 +937,7 @@ p {
   }
 
   .space-background__nebula,
+  .about-model.is-visible .model-frame,
   .typing-cursor {
     animation: none;
   }
@@ -705,6 +946,8 @@ p {
     opacity: 1;
     --reveal-x: 0px;
     --reveal-y: 0px;
+    --reveal-scale: 1;
+    --reveal-rotate: 0deg;
     transition: none;
   }
 
@@ -724,7 +967,6 @@ p {
   }
 
   .portfolio-layout,
-  .about-layout,
   .contact-layout {
     grid-template-columns: 1fr;
   }
@@ -733,15 +975,42 @@ p {
     max-width: 720px;
   }
 
+  .about-people {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .about-person {
+    min-height: auto;
+    align-items: center;
+    text-align: center;
+  }
+
+  .about-person p:last-child {
+    max-width: 52ch;
+  }
+
+  .about-model {
+    order: 2;
+    width: min(100%, 430px);
+    margin: 0 auto;
+  }
+
+  .about-person--darren {
+    order: 1;
+  }
+
+  .about-person--heath {
+    order: 3;
+  }
+
   .scan-shell,
   .hero-model {
     min-height: 420px;
     height: 420px;
   }
 
-  .about-layout .scan-shell {
-    order: 2;
-  }
 
   .testimonial-grid {
     grid-template-columns: 1fr;
@@ -785,6 +1054,34 @@ p {
 
   .hero-copy h1 {
     font-size: clamp(2.35rem, 13vw, 4.5rem);
+  }
+
+
+
+  .about-layout {
+    gap: 38px;
+  }
+
+  .about-heading h2 {
+    font-size: clamp(2.8rem, 16vw, 4.6rem);
+  }
+
+  .about-people {
+    gap: 18px;
+  }
+
+  .about-person {
+    padding: 26px 22px;
+  }
+
+  .model-frame {
+    min-height: 360px;
+  }
+
+  .about-model .scan-shell,
+  .about-model .hero-model {
+    min-height: 340px;
+    height: 340px;
   }
 
   .portfolio-grid {
