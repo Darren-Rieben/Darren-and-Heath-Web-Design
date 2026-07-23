@@ -390,9 +390,70 @@ p {
 
 .about-layout {
   display: grid;
-  grid-template-columns: 0.9fr 1.1fr;
+  gap: 32px;
+}
+
+.about-copy {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.about-copy p {
+  max-width: 62ch;
+}
+
+.about-people {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 380px) minmax(0, 1fr);
   gap: 24px;
   align-items: center;
+}
+
+.about-person {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  text-align: center;
+  padding: 12px 10px;
+}
+
+.about-name {
+  position: relative;
+  padding-bottom: 14px;
+  font-size: clamp(1.3rem, 2.4vw, 2rem);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text);
+}
+
+.about-name::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 88px;
+  height: 2px;
+  transform: translateX(-50%);
+  background: rgba(223, 228, 237, 0.7);
+}
+
+.about-person p {
+  max-width: 34ch;
+}
+
+.about-model {
+  display: grid;
+  place-items: center;
+}
+
+.about-model .scan-shell {
+  min-height: 380px;
+}
+
+.about-model .hero-model {
+  height: 380px;
 }
 
 .portfolio-grid {
@@ -614,6 +675,18 @@ p {
   .portfolio-layout,
   .contact-layout {
     grid-template-columns: 1fr;
+  }
+
+  .about-people {
+    grid-template-columns: 1fr;
+  }
+
+  .about-model .scan-shell {
+    min-height: 320px;
+  }
+
+  .about-model .hero-model {
+    height: 320px;
   }
 
   .hero-copy h1 {

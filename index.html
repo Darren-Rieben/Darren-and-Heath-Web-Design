@@ -92,48 +92,61 @@
 
     <section class="snap-section" id="divider-3">
       <div class="section-inner about-layout">
-        <div class="scan-shell" aria-label="Interactive 3D model viewer">
-          <model-viewer
-            id="heroModel"
-            class="hero-model"
-            src="assets/3dmodel.glb"
-            alt="Interactive 3D model."
-            loading="eager"
-            reveal="auto"
-            camera-controls
-            auto-rotate
-            auto-rotate-delay="1400"
-            rotation-per-second="8deg"
-            interaction-prompt="none"
-            interaction-prompt-style="basic"
-            interaction-prompt-threshold="1800"
-            disable-zoom
-            touch-action="pan-y"
-            shadow-intensity="1.25"
-            shadow-softness="0.8"
-            exposure="1.15"
-            environment-image="neutral"
-            camera-orbit="30deg 72deg 105%"
-            min-camera-orbit="auto 25deg 55%"
-            max-camera-orbit="auto 155deg 220%"
-            min-field-of-view="20deg"
-            max-field-of-view="55deg"
-            interpolation-decay="90"
-          ></model-viewer>
-        </div>
-
-        <div>
+        <div class="about-copy">
           <h2 class="typed-title" data-text="About us" data-animate-on-view="true">
             <span class="typed-content">About us</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
           <p>
-            Add a short introduction about Darren and Heath here. This is a good place to explain who you are,
-            how you work together, and the kind of websites you like to build.
+            We build custom websites with a clean visual style, clear messaging, and a practical focus on helping businesses look credible and convert visitors into clients.
           </p>
-          <p>
-            Add another paragraph about your experience, past projects, design approach, and what makes your process
-            different for clients.
-          </p>
+        </div>
+
+        <div class="about-people">
+          <article class="about-person">
+            <h3 class="about-name">Darren Rieben</h3>
+            <p>
+              Add Darren's introduction here. Use this space to explain his role, strengths, experience, and the perspective he brings to each project.
+            </p>
+          </article>
+
+          <div class="about-model">
+            <div class="scan-shell" aria-label="Interactive 3D model viewer">
+              <model-viewer
+                id="heroModel"
+                class="hero-model"
+                src="assets/3dmodel.glb"
+                alt="Interactive 3D model."
+                loading="eager"
+                reveal="auto"
+                camera-controls
+                auto-rotate
+                auto-rotate-delay="1400"
+                rotation-per-second="8deg"
+                interaction-prompt="none"
+                interaction-prompt-style="basic"
+                interaction-prompt-threshold="1800"
+                disable-zoom
+                touch-action="pan-y"
+                shadow-intensity="1.25"
+                shadow-softness="0.8"
+                exposure="1.15"
+                environment-image="neutral"
+                camera-orbit="30deg 72deg 105%"
+                min-camera-orbit="auto 25deg 55%"
+                max-camera-orbit="auto 155deg 220%"
+                min-field-of-view="20deg"
+                max-field-of-view="55deg"
+                interpolation-decay="90"
+              ></model-viewer>
+            </div>
+          </div>
+
+          <article class="about-person">
+            <h3 class="about-name">Heath Leon</h3>
+            <p>
+              Add Heath's introduction here. This paragraph can cover his background, design instincts, technical skills, and the value he adds for clients.
+            </p>
+          </article>
         </div>
       </div>
     </section>
