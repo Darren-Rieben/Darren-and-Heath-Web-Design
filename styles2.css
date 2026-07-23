@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
+
 :root {
   --bg: #06080d;
   --bg-soft: #0d1119;
@@ -13,6 +15,11 @@
   --radius: 20px;
   --container-width: 1180px;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Global typography */
+  --font-body: "Manrope", "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  --font-display: "Space Grotesk", "Manrope", "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  --font-ui: "Manrope", "Avenir Next", Avenir, "Segoe UI", sans-serif;
 }
 
 * {
@@ -33,7 +40,7 @@ body {
   overflow-y: auto;
   color: var(--text);
   background: var(--bg);
-  font-family: "Avenir Next", Avenir, "Segoe UI", sans-serif;
+  font-family: var(--font-body);
   line-height: 1.55;
   scroll-snap-type: y proximity;
 }
@@ -136,6 +143,7 @@ main,
 .header-nav a,
 .site-footer a {
   color: var(--text-muted);
+  font-family: var(--font-ui);
   text-decoration: none;
   transition: color 200ms ease, text-shadow 200ms ease;
 }
@@ -190,8 +198,10 @@ main,
 }
 
 h1,
-h2 {
+h2,
+h3 {
   color: var(--text);
+  font-family: var(--font-display);
   font-weight: 500;
   letter-spacing: -0.035em;
   line-height: 1.02;
@@ -209,6 +219,7 @@ p {
 }
 
 .eyebrow {
+  font-family: var(--font-ui);
   margin-bottom: 14px;
   color: rgba(220, 232, 250, 0.68);
   font-size: 0.68rem;
@@ -254,6 +265,7 @@ p {
 }
 
 .button {
+  font-family: var(--font-ui);
   min-width: 150px;
   display: inline-flex;
   align-items: center;
@@ -602,6 +614,7 @@ p {
 }
 
 .about-role {
+  font-family: var(--font-ui);
   margin-bottom: 13px;
   color: var(--accent-soft);
   font-size: 0.68rem;
@@ -688,6 +701,7 @@ p {
 }
 
 .model-caption {
+  font-family: var(--font-ui);
   position: absolute;
   left: 50%;
   bottom: 22px;
@@ -748,6 +762,7 @@ p {
 }
 
 .testimonial strong {
+  font-family: var(--font-ui);
   margin-top: 28px;
   color: var(--text-muted);
   font-size: 0.72rem;
@@ -773,6 +788,7 @@ p {
 }
 
 .contact-form label {
+  font-family: var(--font-ui);
   display: grid;
   gap: 7px;
   color: #dce3ee;
@@ -808,6 +824,7 @@ p {
 }
 
 .contact-form button {
+  font-family: var(--font-ui);
   min-height: 48px;
   border: 1px solid rgba(255, 255, 255, 0.62);
   border-radius: 999px;
@@ -829,6 +846,7 @@ p {
 }
 
 .site-footer {
+  font-family: var(--font-ui);
   padding: 28px clamp(18px, 4vw, 56px);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(4, 6, 10, 0.72);
@@ -1129,5 +1147,93 @@ p {
   .hero-model {
     min-height: 340px;
     height: 340px;
+  }
+}
+
+/* 3D model loading and error states */
+.model-poster {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: transparent;
+}
+
+.model-poster__orb {
+  width: 84px;
+  aspect-ratio: 1;
+  border: 1px solid rgba(225, 237, 255, 0.28);
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 30%, rgba(255, 255, 255, 0.34), rgba(164, 193, 232, 0.08) 38%, transparent 68%);
+  box-shadow: 0 0 38px rgba(181, 210, 249, 0.15), inset 0 0 24px rgba(255, 255, 255, 0.06);
+  animation: model-loader-pulse 1.8s ease-in-out infinite;
+}
+
+.model-status {
+  position: absolute;
+  left: 50%;
+  bottom: 52px;
+  z-index: 4;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: calc(100% - 32px);
+  padding: 8px 12px;
+  border: 1px solid rgba(230, 239, 252, 0.14);
+  border-radius: 999px;
+  background: rgba(5, 8, 13, 0.72);
+  backdrop-filter: blur(10px);
+  color: rgba(224, 234, 248, 0.72);
+  font-size: 0.62rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  line-height: 1.35;
+  text-align: center;
+  text-transform: uppercase;
+  transform: translateX(-50%);
+  transition: opacity 240ms ease, border-color 240ms ease, color 240ms ease;
+}
+
+.model-status__dot {
+  flex: 0 0 auto;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(212, 230, 255, 0.82);
+  box-shadow: 0 0 12px rgba(190, 220, 255, 0.55);
+  animation: model-status-blink 1.1s ease-in-out infinite;
+}
+
+.model-status.is-loaded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.model-status.is-error {
+  border-color: rgba(255, 190, 190, 0.28);
+  color: rgba(255, 219, 219, 0.92);
+  white-space: normal;
+}
+
+.model-status.is-error .model-status__dot {
+  background: rgba(255, 161, 161, 0.9);
+  box-shadow: 0 0 12px rgba(255, 142, 142, 0.45);
+  animation: none;
+}
+
+@keyframes model-loader-pulse {
+  0%, 100% { transform: scale(0.92); opacity: 0.55; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+@keyframes model-status-blink {
+  0%, 100% { opacity: 0.35; transform: scale(0.8); -webkit-transform: scale(0.8); -moz-transform: scale(0.8); -ms-transform: scale(0.8); -o-transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .model-poster__orb,
+  .model-status__dot {
+    animation: none;
   }
 }
