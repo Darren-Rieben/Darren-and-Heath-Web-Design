@@ -88,6 +88,91 @@
       viewTriggeredTitles.forEach((titleElement) => runTitleOnce(titleElement, 58));
     }
 
+    const testimonialTrack = document.getElementById("testimonialTrack");
+
+    if (testimonialTrack) {
+      let isPointerDown = false;
+      let startX = 0;
+      let startScrollLeft = 0;
+      let lastX = 0;
+      let lastTime = 0;
+      let velocity = 0;
+      let momentumFrame = 0;
+
+      const stopMomentum = () => {
+        if (momentumFrame) {
+          window.cancelAnimationFrame(momentumFrame);
+          momentumFrame = 0;
+        }
+      };
+
+      const beginMomentum = () => {
+        stopMomentum();
+
+        const step = () => {
+          velocity *= 0.94;
+
+          if (Math.abs(velocity) < 0.08) {
+            momentumFrame = 0;
+            return;
+          }
+
+          testimonialTrack.scrollLeft += velocity * 18;
+          momentumFrame = window.requestAnimationFrame(step);
+        };
+
+        momentumFrame = window.requestAnimationFrame(step);
+      };
+
+      const endDrag = (event) => {
+        if (!isPointerDown) {
+          return;
+        }
+
+        isPointerDown = false;
+        testimonialTrack.classList.remove("is-dragging");
+
+        if (event && typeof event.pointerId === "number" && testimonialTrack.hasPointerCapture(event.pointerId)) {
+          testimonialTrack.releasePointerCapture(event.pointerId);
+        }
+
+        beginMomentum();
+      };
+
+      testimonialTrack.addEventListener("pointerdown", (event) => {
+        isPointerDown = true;
+        startX = event.clientX;
+        startScrollLeft = testimonialTrack.scrollLeft;
+        lastX = event.clientX;
+        lastTime = performance.now();
+        velocity = 0;
+        stopMomentum();
+        testimonialTrack.classList.add("is-dragging");
+        testimonialTrack.setPointerCapture(event.pointerId);
+      });
+
+      testimonialTrack.addEventListener("pointermove", (event) => {
+        if (!isPointerDown) {
+          return;
+        }
+
+        const currentX = event.clientX;
+        const deltaX = currentX - startX;
+        testimonialTrack.scrollLeft = startScrollLeft - deltaX;
+
+        const now = performance.now();
+        const deltaTime = Math.max(16, now - lastTime);
+        velocity = (lastX - currentX) / deltaTime;
+        lastX = currentX;
+        lastTime = now;
+      });
+
+      testimonialTrack.addEventListener("pointerup", endDrag);
+      testimonialTrack.addEventListener("pointercancel", endDrag);
+      testimonialTrack.addEventListener("lostpointercapture", endDrag);
+      testimonialTrack.addEventListener("dragstart", (event) => event.preventDefault());
+    }
+
     const contactForm = document.getElementById("contactForm");
     const formMessage = document.getElementById("formMessage");
 
