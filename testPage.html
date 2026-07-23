@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Darren and Heath Web Design creates modern, streamlined websites built to stand out and convert.">
+  <meta name="theme-color" content="#06080d">
+  <title>Darren and Heath Web Design</title>
+  <link rel="stylesheet" href="styles2.css">
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
+</head>
+<body>
+  <div class="space-background" aria-hidden="true">
+    <canvas class="starfield" id="starfield"></canvas>
+    <div class="space-background__nebula"></div>
+    <div class="space-background__vignette"></div>
+  </div>
+  <div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="site-brand magnetic" href="#divider-1">Darren + Heath</a>
+    <nav class="header-nav" aria-label="Primary navigation">
+      <a class="magnetic" href="#divider-2">Portfolio</a>
+      <a class="magnetic" href="#divider-3">About</a>
+      <a class="magnetic" href="#divider-4">Clients</a>
+      <a class="magnetic" href="#divider-5">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="snap-section hero-section" id="divider-1">
+      <div class="section-inner hero-layout" data-reveal>
+        <div class="hero-copy">
+          <p class="eyebrow">Independent web design studio</p>
+          <h1 class="typed-title" data-text="Do web design differently, with us" aria-label="Do web design differently, with us">
+            <span class="typed-content">Do web design differently, with us</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h1>
+          <p class="hero-description">
+            Help your business stand out with a clean, modern website that is easy to navigate and optimized for conversions. We create distinctive digital experiences that make your brand feel credible from the first click.
+          </p>
+          <div class="hero-actions">
+            <a class="button button--primary magnetic" href="#divider-5">Start a project</a>
+            <a class="button button--quiet magnetic" href="#divider-2">View our work</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="snap-section" id="divider-2">
+      <div class="section-inner portfolio-layout">
+        <div class="section-copy" data-reveal="left">
+          <p class="eyebrow">Selected work</p>
+          <h2 class="typed-title" data-text="Our Portfolio" data-animate-on-view="true">
+            <span class="typed-content">Our Portfolio</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h2>
+          <p>
+            Focused websites that balance visual identity, usability, and clear conversion paths. Each project is designed to feel specific to the business—not copied from a template.
+          </p>
+        </div>
+
+        <div class="portfolio-grid" aria-label="Portfolio projects">
+          <article class="portfolio-card featured magnetic" data-reveal="card">
+            <a class="portfolio-preview-link" href="https://lakenormanboatdetailing.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Lake Norman Boat Detailing website">
+              <div class="portfolio-preview-frame-wrap">
+                <iframe
+                  class="portfolio-preview-frame"
+                  src="https://lakenormanboatdetailing.com/"
+                  title="Lake Norman Boat Detailing live site preview"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+                <div class="portfolio-preview-overlay" aria-hidden="true"></div>
+                <div class="project-meta">
+                  <span>Service business</span>
+                  <strong>Lake Norman Boat Detailing</strong>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <article class="portfolio-card featured magnetic" data-reveal="card">
+            <a class="portfolio-preview-link" href="https://heathlyon.github.io/HeathLyonPortfolio/" target="_blank" rel="noopener noreferrer" aria-label="Open Heath Lyon portfolio website">
+              <div class="portfolio-preview-frame-wrap">
+                <iframe
+                  class="portfolio-preview-frame"
+                  src="https://heathlyon.github.io/HeathLyonPortfolio/"
+                  title="Heath Lyon Portfolio live site preview"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+                <div class="portfolio-preview-overlay" aria-hidden="true"></div>
+                <div class="project-meta">
+                  <span>Personal portfolio</span>
+                  <strong>Heath Lyon</strong>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <article class="portfolio-card portfolio-card--placeholder magnetic" data-reveal="card">
+            <span>Next project</span>
+            <strong>Your site could be here.</strong>
+          </article>
+
+          <article class="portfolio-card portfolio-card--placeholder magnetic" data-reveal="card">
+            <span>Now booking</span>
+            <strong>Built around your business.</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="snap-section" id="divider-3">
+      <div class="section-inner about-layout">
+        <div class="scan-shell" aria-label="Interactive 3D model viewer" data-reveal="left">
+          <model-viewer
+            id="heroModel"
+            class="hero-model"
+            src="assets/3dmodel.glb"
+            alt="Interactive 3D model."
+            loading="eager"
+            reveal="auto"
+            camera-controls
+            auto-rotate
+            auto-rotate-delay="1400"
+            rotation-per-second="8deg"
+            interaction-prompt="none"
+            disable-zoom
+            touch-action="pan-y"
+            shadow-intensity="1.1"
+            shadow-softness="0.9"
+            exposure="1.08"
+            environment-image="neutral"
+            camera-orbit="30deg 72deg 105%"
+            min-camera-orbit="auto 25deg 55%"
+            max-camera-orbit="auto 155deg 220%"
+            min-field-of-view="20deg"
+            max-field-of-view="55deg"
+            interpolation-decay="90"
+          ></model-viewer>
+        </div>
+
+        <div class="section-copy" data-reveal="right">
+          <p class="eyebrow">Small studio, direct process</p>
+          <h2 class="typed-title" data-text="About us" data-animate-on-view="true">
+            <span class="typed-content">About us</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h2>
+          <p>
+            Darren and Heath work directly with each client from early concept through launch. That keeps communication fast, decisions clear, and the final website aligned with the business it represents.
+          </p>
+          <p>
+            Our approach combines modern design, responsive development, practical SEO foundations, and a streamlined handoff that makes the finished site easy to maintain.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="snap-section" id="divider-4">
+      <div class="section-inner testimonial-shell">
+        <div class="section-copy" data-reveal>
+          <p class="eyebrow">Client experience</p>
+          <h2 class="typed-title" data-text="What our clients say" data-animate-on-view="true">
+            <span class="typed-content">What our clients say</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h2>
+        </div>
+
+        <div class="testimonial-grid">
+          <article class="testimonial magnetic" data-reveal="card">
+            <p>
+              “Their process was smooth and focused. The final website looked clean, unique, and converted better than our old one.”
+            </p>
+            <strong>Client Placeholder</strong>
+          </article>
+
+          <article class="testimonial magnetic" data-reveal="card">
+            <p>
+              “Fast communication, strong design instincts, and exactly the kind of minimal brand feel we wanted.”
+            </p>
+            <strong>Client Placeholder</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="snap-section" id="divider-5">
+      <div class="section-inner contact-layout">
+        <div class="section-copy" data-reveal="left">
+          <p class="eyebrow">Tell us what you are building</p>
+          <h2 class="typed-title" data-text="Start a project" data-animate-on-view="true">
+            <span class="typed-content">Start a project</span><span class="typing-cursor" aria-hidden="true">|</span>
+          </h2>
+          <p>Share the essentials. We will review the project and reach out with practical next steps.</p>
+        </div>
+
+        <form class="contact-form" id="contactForm" data-reveal="right">
+          <label>
+            Business name
+            <input type="text" name="businessName" autocomplete="organization" required>
+          </label>
+
+          <label>
+            Business description
+            <textarea name="description" required></textarea>
+          </label>
+
+          <label>
+            What do you need?
+            <textarea name="needs" required></textarea>
+          </label>
+
+          <label>
+            Email or phone
+            <input type="text" name="contactInfo" autocomplete="email" required>
+          </label>
+
+          <button class="magnetic" type="submit">Send request</button>
+          <p class="form-message" id="formMessage" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      <span>Darren + Heath Web Design</span>
+      <a class="magnetic" href="mailto:darrenheathwebdev@gmail.com">darrenheathwebdev@gmail.com</a>
+      <a class="magnetic" href="tel:9805407648">980-540-7648</a>
+    </p>
+  </footer>
+
+  <script src="scripts2.js?v=5" defer></script>
+</body>
+</html>
