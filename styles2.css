@@ -131,6 +131,97 @@ a {
   to { transform: translate3d(1.5%, 1%, 0) scale(1.04); }
 }
 
+
+/* Occasional shooting-star Easter egg */
+.shooting-star {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 24;
+  width: 104px;
+  height: 44px;
+  display: block;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform-origin: center;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 0 8px rgba(223, 237, 255, 0.55));
+  cursor: pointer;
+}
+
+.shooting-star.is-active {
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.shooting-star:focus-visible {
+  outline: 1px solid rgba(239, 246, 255, 0.85);
+  outline-offset: 6px;
+  border-radius: 999px;
+}
+
+.shooting-star__tail {
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  width: 82px;
+  height: 2px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 0%, rgba(171, 203, 242, 0.12) 26%, rgba(224, 239, 255, 0.72) 78%, #ffffff 100%);
+  box-shadow: 0 0 8px rgba(202, 225, 255, 0.38);
+}
+
+.shooting-star__tail::before,
+.shooting-star__tail::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  width: 68px;
+  height: 1px;
+  transform-origin: right center;
+  background: linear-gradient(90deg, transparent, rgba(218, 235, 255, 0.38));
+}
+
+.shooting-star__tail::before {
+  transform: rotate(4deg);
+}
+
+.shooting-star__tail::after {
+  transform: rotate(-4deg);
+}
+
+.shooting-star__core {
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  transform: translateY(-50%) rotate(45deg);
+  border-radius: 2px;
+  background: #ffffff;
+  box-shadow:
+    0 0 5px #ffffff,
+    0 0 13px rgba(204, 226, 255, 0.95),
+    0 0 26px rgba(148, 190, 240, 0.52);
+}
+
+.shooting-star__spark {
+  position: absolute;
+  right: 9px;
+  top: 50%;
+  width: 2px;
+  height: 16px;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: linear-gradient(transparent, rgba(255, 255, 255, 0.95), transparent);
+}
+
+.shooting-star__spark--two {
+  transform: translateY(-50%) rotate(90deg);
+}
+
 /* Header */
 .site-header {
   position: fixed;
@@ -683,6 +774,49 @@ p {
   text-transform: uppercase;
 }
 
+.testimonial-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(230, 239, 255, 0.1);
+}
+
+.review-source {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.review-source::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  box-shadow: 0 0 12px rgba(175, 197, 232, 0.45);
+}
+
+.review-source svg {
+  width: 17px;
+  height: 17px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.review-source--word::before {
+  display: none;
+}
+
 /* Contact */
 .contact-form {
   display: grid;
@@ -980,6 +1114,7 @@ p {
   }
 
   .space-background__glow,
+  .shooting-star,
   .model-halo,
   .model-poster__orb,
   .model-status__dot,
@@ -1004,4 +1139,208 @@ p {
   .cursor-aura {
     display: none;
   }
+}
+
+
+/* Hidden dinosaur page */
+.dinosaur-page {
+  min-height: 100vh;
+}
+
+.dino-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 30;
+  min-height: var(--header-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 clamp(20px, 4vw, 56px);
+  border-bottom: 1px solid rgba(230, 239, 255, 0.1);
+  background: rgba(6, 8, 13, 0.68);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.dino-brand,
+.dino-back {
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.dino-brand {
+  color: var(--text-muted);
+}
+
+.dino-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.dino-back:hover {
+  color: #ffffff;
+  transform: translateX(-3px);
+}
+
+.dino-main {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--header-height) + 72px) 24px 64px;
+}
+
+.dino-content {
+  width: min(100%, 980px);
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.dino-content h1 {
+  max-width: 12ch;
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+}
+
+.dino-intro {
+  max-width: 58ch;
+  color: var(--text-muted);
+  font-size: clamp(1rem, 1.5vw, 1.14rem);
+}
+
+.dino-scene {
+  position: relative;
+  width: min(100%, 820px);
+  aspect-ratio: 16 / 9;
+  min-height: 300px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.dino-scene::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 9%;
+  width: 72%;
+  height: 18%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(156, 193, 236, 0.2), transparent 68%);
+  filter: blur(14px);
+}
+
+.dino-moon {
+  position: absolute;
+  left: 14%;
+  top: 10%;
+  width: clamp(88px, 15vw, 150px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 36% 35%, rgba(255, 255, 255, 0.98), rgba(218, 232, 250, 0.88) 38%, rgba(134, 167, 209, 0.34) 68%, transparent 70%);
+  box-shadow: 0 0 48px rgba(198, 222, 255, 0.22);
+  opacity: 0.82;
+}
+
+.dino-illustration {
+  position: relative;
+  z-index: 2;
+  width: min(92%, 760px);
+  overflow: visible;
+  filter: drop-shadow(0 24px 34px rgba(0, 0, 0, 0.42));
+  animation: dinosaur-breathe 4.8s ease-in-out infinite;
+}
+
+.dino-eye {
+  animation: dinosaur-blink 5.5s steps(1) infinite;
+  transform-origin: center;
+}
+
+.dino-ground {
+  position: absolute;
+  left: 50%;
+  bottom: 13%;
+  z-index: 1;
+  width: 66%;
+  height: 2px;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(211, 230, 253, 0.34), transparent);
+}
+
+.dino-actions {
+  display: flex;
+  justify-content: center;
+}
+
+@keyframes dinosaur-breathe {
+  0%, 100% { transform: translateY(0) rotate(-0.2deg); }
+  50% { transform: translateY(-7px) rotate(0.35deg); }
+}
+
+@keyframes dinosaur-blink {
+  0%, 47%, 51%, 100% { transform: scaleY(1); }
+  48%, 50% { transform: scaleY(0.12); }
+}
+
+@media (max-width: 640px) {
+  .dino-header {
+    padding-inline: 18px;
+  }
+
+  .dino-brand {
+    display: none;
+  }
+
+  .dino-scene {
+    min-height: 250px;
+  }
+}
+
+/* Functional contact form states */
+.form-honeypot {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.field-optional {
+  color: var(--text-soft, rgba(255, 255, 255, 0.48));
+  font-size: 0.76em;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact-form button[disabled] {
+  cursor: wait;
+  opacity: 0.68;
+  transform: none !important;
+  -webkit-transform: none !important;
+  -moz-transform: none !important;
+  -ms-transform: none !important;
+  -o-transform: none !important;
+}
+
+.form-message.is-success {
+  color: #b8f5d0;
+}
+
+.form-message.is-error {
+  color: #ffb8b8;
 }
