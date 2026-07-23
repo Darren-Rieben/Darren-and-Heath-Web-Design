@@ -6,47 +6,49 @@
   <meta name="description" content="Darren and Heath Web Design creates modern, streamlined websites built to stand out and convert.">
   <meta name="theme-color" content="#06080d">
   <title>Darren and Heath Web Design</title>
+
   <link rel="stylesheet" href="styles2.css">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
+  <script src="scripts2.js" defer></script>
 </head>
 <body>
   <div class="space-background" aria-hidden="true">
     <canvas class="starfield" id="starfield"></canvas>
-    <div class="space-background__nebula"></div>
+    <div class="space-background__glow"></div>
     <div class="space-background__vignette"></div>
   </div>
   <div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
 
   <header class="site-header">
-    <a class="site-brand magnetic" href="#divider-1">Darren + Heath</a>
+    <a class="site-brand magnetic" href="#home">Darren + Heath</a>
     <nav class="header-nav" aria-label="Primary navigation">
-      <a class="magnetic" href="#divider-2">Portfolio</a>
-      <a class="magnetic" href="#divider-3">About</a>
-      <a class="magnetic" href="#divider-4">Clients</a>
-      <a class="magnetic" href="#divider-5">Contact</a>
+      <a class="magnetic" href="#portfolio">Portfolio</a>
+      <a class="magnetic" href="#about">About</a>
+      <a class="magnetic" href="#clients">Clients</a>
+      <a class="magnetic" href="#contact">Contact</a>
     </nav>
   </header>
 
   <main>
-    <section class="snap-section hero-section" id="divider-1">
-      <div class="section-inner hero-layout" data-reveal>
+    <section class="page-section hero-section" id="home">
+      <div class="section-inner hero-layout" data-reveal="fade-up">
         <div class="hero-copy">
           <p class="eyebrow">Independent web design studio</p>
           <h1 class="typed-title" data-text="Do web design differently, with us" aria-label="Do web design differently, with us">
             <span class="typed-content">Do web design differently, with us</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h1>
           <p class="hero-description">
-            Help your business stand out with a clean, modern website that is easy to navigate and optimized for conversions. We create distinctive digital experiences that make your brand feel credible from the first click.
+            Help your business stand out with a clean, modern website that is easy to navigate and optimized for conversions. We create focused digital experiences that make your brand feel credible from the first click.
           </p>
           <div class="hero-actions">
-            <a class="button button--primary magnetic" href="#divider-5">Start a project</a>
-            <a class="button button--quiet magnetic" href="#divider-2">View our work</a>
+            <a class="button button--primary magnetic" href="#contact">Start a project</a>
+            <a class="button button--quiet magnetic" href="#portfolio">View our work</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="snap-section" id="divider-2">
+    <section class="page-section" id="portfolio">
       <div class="section-inner portfolio-layout">
         <div class="section-copy" data-reveal="left">
           <p class="eyebrow">Selected work</p>
@@ -54,12 +56,12 @@
             <span class="typed-content">Our Portfolio</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
           <p>
-            Focused websites that balance visual identity, usability, and clear conversion paths. Each project is designed to feel specific to the business—not copied from a template.
+            Focused websites that balance visual identity, usability, and clear conversion paths. Each project is designed for the business instead of copied from a generic template.
           </p>
         </div>
 
         <div class="portfolio-grid" aria-label="Portfolio projects">
-          <article class="portfolio-card featured magnetic" data-reveal="card">
+          <article class="portfolio-card magnetic" data-reveal="card">
             <a class="portfolio-preview-link" href="https://lakenormanboatdetailing.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Lake Norman Boat Detailing website">
               <div class="portfolio-preview-frame-wrap">
                 <iframe
@@ -78,7 +80,7 @@
             </a>
           </article>
 
-          <article class="portfolio-card featured magnetic" data-reveal="card">
+          <article class="portfolio-card magnetic" data-reveal="card">
             <a class="portfolio-preview-link" href="https://heathlyon.github.io/HeathLyonPortfolio/" target="_blank" rel="noopener noreferrer" aria-label="Open Heath Lyon portfolio website">
               <div class="portfolio-preview-frame-wrap">
                 <iframe
@@ -110,9 +112,9 @@
       </div>
     </section>
 
-    <section class="snap-section about-section" id="divider-3">
+    <section class="page-section about-section" id="about">
       <div class="section-inner about-layout">
-        <div class="about-heading" data-reveal="top">
+        <header class="about-heading" data-reveal="top">
           <p class="eyebrow">The people behind the work</p>
           <h2 class="typed-title" data-text="Meet us" data-animate-on-view="true">
             <span class="typed-content">Meet us</span><span class="typing-cursor" aria-hidden="true">|</span>
@@ -120,73 +122,74 @@
           <p>
             Work directly with the people designing and building your website. Clear communication, focused decisions, and no unnecessary layers.
           </p>
-        </div>
+        </header>
 
         <div class="about-people">
-          <article class="about-person about-person--darren magnetic" data-reveal="person-left" data-reveal-delay="90">
+          <article class="about-person about-person--darren" data-reveal="person-left" data-reveal-delay="80">
+            <span class="about-line" aria-hidden="true"></span>
             <p class="about-role">Co-founder</p>
             <h3 class="about-name">Darren Rieben</h3>
             <p>
-              Add Darren’s introduction here. Use this space to explain his role, experience, strengths, and the perspective he brings to each client project.
+              Add Darren’s introduction here. Explain his role, experience, strengths, and the perspective he brings to every client project.
             </p>
           </article>
 
-          <div class="about-model" data-reveal="model" data-reveal-delay="230">
-            <div class="model-frame">
-              <div class="scan-shell" aria-label="Interactive 3D model viewer">
-                <model-viewer
-                  id="heroModel"
-                  class="hero-model"
-                  src="assets/3dmodel.glb"
-                  data-model-paths="assets/3dmodel.glb,3dmodel.glb,assets/model.glb,model.glb"
-                  alt="Interactive 3D model representing Darren and Heath Web Design."
-                  loading="eager"
-                  reveal="auto"
-                  camera-controls
-                  auto-rotate
-                  auto-rotate-delay="1400"
-                  rotation-per-second="8deg"
-                  interaction-prompt="none"
-                  disable-zoom
-                  touch-action="pan-y"
-                  shadow-intensity="1.1"
-                  shadow-softness="0.9"
-                  exposure="1.08"
-                  environment-image="neutral"
-                  camera-orbit="30deg 72deg 105%"
-                  min-camera-orbit="auto 25deg 55%"
-                  max-camera-orbit="auto 155deg 220%"
-                  min-field-of-view="20deg"
-                  max-field-of-view="55deg"
-                  interpolation-decay="90"
-                >
-                  <div class="model-poster" slot="poster" aria-hidden="true">
-                    <span class="model-poster__orb"></span>
-                  </div>
-                </model-viewer>
-                <div class="model-status" id="modelStatus" role="status" aria-live="polite">
-                  <span class="model-status__dot" aria-hidden="true"></span>
-                  <span id="modelStatusText">Loading 3D model…</span>
+          <div class="about-model" data-reveal="model" data-reveal-delay="220">
+            <div class="model-halo" aria-hidden="true"></div>
+            <div class="scan-shell" aria-label="Interactive 3D model viewer">
+              <model-viewer
+                id="heroModel"
+                class="hero-model"
+                src="assets/3dmodel.glb"
+                alt="Interactive 3D model representing Darren and Heath Web Design."
+                loading="eager"
+                reveal="auto"
+                camera-controls
+                auto-rotate
+                auto-rotate-delay="1400"
+                rotation-per-second="8deg"
+                interaction-prompt="none"
+                disable-zoom
+                touch-action="pan-y"
+                shadow-intensity="1.05"
+                shadow-softness="0.9"
+                exposure="1.08"
+                environment-image="neutral"
+                camera-orbit="30deg 72deg 105%"
+                min-camera-orbit="auto 25deg 55%"
+                max-camera-orbit="auto 155deg 220%"
+                min-field-of-view="20deg"
+                max-field-of-view="55deg"
+                interpolation-decay="90"
+              >
+                <div class="model-poster" slot="poster" aria-hidden="true">
+                  <span class="model-poster__orb"></span>
                 </div>
+              </model-viewer>
+
+              <div class="model-status" id="modelStatus" role="status" aria-live="polite">
+                <span class="model-status__dot" aria-hidden="true"></span>
+                <span id="modelStatusText">Loading 3D model…</span>
               </div>
-              <p class="model-caption">Drag to explore</p>
             </div>
+            <p class="model-caption">Drag to explore</p>
           </div>
 
-          <article class="about-person about-person--heath magnetic" data-reveal="person-right" data-reveal-delay="370">
+          <article class="about-person about-person--heath" data-reveal="person-right" data-reveal-delay="360">
+            <span class="about-line" aria-hidden="true"></span>
             <p class="about-role">Co-founder</p>
             <h3 class="about-name">Heath Lyon</h3>
             <p>
-              Add Heath’s introduction here. Use this space to describe his design, development, technical skills, and the value he brings to client work.
+              Add Heath’s introduction here. Describe his design and development skills, technical background, and the value he brings to client work.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="snap-section" id="divider-4">
+    <section class="page-section" id="clients">
       <div class="section-inner testimonial-shell">
-        <div class="section-copy" data-reveal>
+        <div class="section-copy" data-reveal="fade-up">
           <p class="eyebrow">Client experience</p>
           <h2 class="typed-title" data-text="What our clients say" data-animate-on-view="true">
             <span class="typed-content">What our clients say</span><span class="typing-cursor" aria-hidden="true">|</span>
@@ -195,23 +198,19 @@
 
         <div class="testimonial-grid">
           <article class="testimonial magnetic" data-reveal="card">
-            <p>
-              “Their process was smooth and focused. The final website looked clean, unique, and converted better than our old one.”
-            </p>
+            <p>“Their process was smooth and focused. The final website looked clean, unique, and converted better than our old one.”</p>
             <strong>Client Placeholder</strong>
           </article>
 
           <article class="testimonial magnetic" data-reveal="card">
-            <p>
-              “Fast communication, strong design instincts, and exactly the kind of minimal brand feel we wanted.”
-            </p>
+            <p>“Fast communication, strong design instincts, and exactly the kind of minimal brand feel we wanted.”</p>
             <strong>Client Placeholder</strong>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="snap-section" id="divider-5">
+    <section class="page-section" id="contact">
       <div class="section-inner contact-layout">
         <div class="section-copy" data-reveal="left">
           <p class="eyebrow">Tell us what you are building</p>
@@ -256,7 +255,5 @@
       <a class="magnetic" href="tel:9805407648">980-540-7648</a>
     </p>
   </footer>
-
-  <script src="scripts2.js?v=8" defer></script>
 </body>
 </html>
