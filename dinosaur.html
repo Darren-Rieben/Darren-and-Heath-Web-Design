@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A hidden dinosaur Easter egg from Darren and Heath Web Design.">
+  <meta name="theme-color" content="#06080d">
+  <title>You Found the Dinosaur | Darren + Heath</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="scripts.js" defer></script>
+</head>
+<body class="dinosaur-page">
+  <div class="space-background" aria-hidden="true">
+    <canvas class="starfield" id="starfield"></canvas>
+    <div class="space-background__glow"></div>
+    <div class="space-background__vignette"></div>
+  </div>
+  <div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
+
+  <header class="dino-header">
+    <a class="dino-back magnetic" href="index.html">← Back to the studio</a>
+    <span class="dino-brand">Darren + Heath</span>
+  </header>
+
+  <main class="dino-main">
+    <section class="dino-content" data-reveal="fade-up">
+      <p class="eyebrow">Secret page discovered</p>
+      <h1>You found the dinosaur.</h1>
+      <p class="dino-intro">
+        The shooting star led you somewhere prehistoric. Consider this a small reward for paying attention to the details.
+      </p>
+
+      <div class="dino-scene" aria-label="Animated illustration of a friendly dinosaur beneath a moon">
+        <div class="dino-moon" aria-hidden="true"></div>
+        <div class="dino-ground" aria-hidden="true"></div>
+        <svg class="dino-illustration" viewBox="0 0 800 440" role="img" aria-labelledby="dinoTitle dinoDescription">
+          <title id="dinoTitle">Friendly tyrannosaurus dinosaur</title>
+          <desc id="dinoDescription">A stylized blue dinosaur standing in a dark, starry landscape.</desc>
+          <defs>
+            <linearGradient id="dinoBody" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#dcecff"/>
+              <stop offset="0.42" stop-color="#8fb3df"/>
+              <stop offset="1" stop-color="#4d719f"/>
+            </linearGradient>
+            <linearGradient id="dinoShade" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#83a9d7"/>
+              <stop offset="1" stop-color="#304d73"/>
+            </linearGradient>
+          </defs>
+
+          <path d="M314 254 C230 238 166 250 88 296 C148 290 206 300 277 327 Z" fill="url(#dinoShade)" opacity="0.92"/>
+          <ellipse cx="405" cy="260" rx="151" ry="103" fill="url(#dinoBody)"/>
+          <path d="M494 206 C532 170 565 125 608 93 C653 59 718 78 732 123 C744 161 713 188 671 187 L617 185 C602 216 580 246 548 273 Z" fill="url(#dinoBody)"/>
+          <path d="M617 185 C644 199 688 205 718 187 C706 221 672 236 627 222 Z" fill="#36587f" opacity="0.9"/>
+          <path d="M637 147 C652 135 670 135 682 145" fill="none" stroke="#20344d" stroke-width="5" stroke-linecap="round"/>
+          <ellipse class="dino-eye" cx="675" cy="126" rx="8" ry="10" fill="#07101b"/>
+          <circle cx="678" cy="123" r="2.5" fill="#ffffff"/>
+          <path d="M611 194 L627 198 L617 206 Z M638 202 L654 204 L643 213 Z M667 202 L682 200 L674 212 Z" fill="#f5f8ff" opacity="0.88"/>
+
+          <path d="M333 325 C318 358 309 389 313 414 L369 414 C358 400 357 376 373 341 Z" fill="url(#dinoShade)"/>
+          <path d="M459 333 C469 364 478 390 476 414 L538 414 C518 398 509 374 506 338 Z" fill="url(#dinoShade)"/>
+          <path d="M307 414 C325 400 355 400 378 414 Z" fill="#dcecff" opacity="0.9"/>
+          <path d="M472 414 C493 397 526 399 548 414 Z" fill="#dcecff" opacity="0.9"/>
+
+          <path d="M507 248 C543 254 557 271 550 288 C536 279 521 278 505 282" fill="none" stroke="#5f85b2" stroke-width="17" stroke-linecap="round"/>
+          <path d="M545 286 L566 294 M548 282 L570 280" stroke="#b9d1ee" stroke-width="5" stroke-linecap="round"/>
+
+          <path d="M345 175 L327 139 L369 165 M398 158 L390 117 L429 153 M451 164 L470 126 L482 177" fill="#bcd4ef" opacity="0.72"/>
+          <ellipse cx="411" cy="403" rx="142" ry="16" fill="#000000" opacity="0.18"/>
+        </svg>
+      </div>
+
+      <div class="dino-actions">
+        <a class="button button--primary magnetic" href="index.html#portfolio">Return to the portfolio</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

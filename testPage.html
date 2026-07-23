@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Darren and Heath Web Design creates modern, streamlined websites built to stand out and convert.">
+  <meta name="Business Description" content="Darren and Heath Web Design creates modern, streamlined websites built to stand out and convert.">
   <meta name="theme-color" content="#06080d">
   <title>Darren and Heath Web Design</title>
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles2.css">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
-  <script src="scripts.js" defer></script>
+  <script src="scripts2.js" defer></script>
 </head>
 <body>
   <div class="space-background" aria-hidden="true">
@@ -18,6 +18,20 @@
     <div class="space-background__vignette"></div>
   </div>
   <div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
+
+  <a
+    class="shooting-star"
+    id="shootingStar"
+    href="dinosaur.html"
+    aria-label="Open the hidden dinosaur page"
+    title="You found a shooting star"
+    tabindex="-1"
+  >
+    <span class="shooting-star__tail" aria-hidden="true"></span>
+    <span class="shooting-star__spark shooting-star__spark--one" aria-hidden="true"></span>
+    <span class="shooting-star__spark shooting-star__spark--two" aria-hidden="true"></span>
+    <span class="shooting-star__core" aria-hidden="true"></span>
+  </a>
 
   <header class="site-header">
     <a class="site-brand magnetic" href="#home">Darren + Heath</a>
@@ -170,7 +184,7 @@
             <p class="about-role">Co-founder</p>
             <h3 class="about-name">Heath Lyon</h3>
             <p>
-              Add Heath’s introduction here. Describe his design and development skills, technical background, and the value he brings to client work.
+              Creative, technically minded, and detail-oriented, Heath combines web design expertise with professional video production experience. He brings a strong visual eye, practical problem-solving skills, and a passion for creating polished digital experiences that feel both artistic and purposeful.
             </p>
           </article>
         </div>
@@ -188,12 +202,12 @@
           <article class="testimonial magnetic" data-reveal="card">
             <p>“Darren knows what he is doing!! Super easy to work with. Did a fantastic job on building my website. He takes Pride and is extremely detailed in his work!”
             </p>
-            <strong>Client Placeholder</strong>
+            <strong>Dallin</strong>
           </article>
 
           <article class="testimonial magnetic" data-reveal="card">
             <p>“I am writing to wholeheartedly recommend Darren Rieben and Heath Lyon. I was able to see their passion for helping me and others firsthand.”</p>
-            <strong>Client Placeholder</strong>
+            <strong>Derick</strong>
           </article>
         </div>
       </div>
@@ -209,33 +223,56 @@
           <p>Share the essentials. We will review the project and reach out with practical next steps.</p>
         </div>
 
-        <form class="contact-form" id="contactForm" data-reveal="right">
+        <form
+          class="contact-form"
+          id="contactForm"
+          data-reveal="right"
+          action="https://formsubmit.co/darrenheathwebdev@gmail.com"
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="New Darren + Heath website inquiry">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <label class="form-honeypot" aria-hidden="true">
+            Leave this field empty
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off">
+          </label>
           <label>
             Business name
-            <input type="text" name="businessName" autocomplete="organization" required>
+            <input type="text" name="Business Name" autocomplete="organization" required>
           </label>
 
           <label>
             Business description
-            <textarea name="description" required></textarea>
+            <textarea name="Business Description" required></textarea>
           </label>
 
           <label>
             What do you need?
-            <textarea name="needs" required></textarea>
+            <textarea name="Project Needs" required></textarea>
           </label>
 
           <label>
-            Email or phone
-            <input type="text" name="contactInfo" autocomplete="email" required>
+            Your name
+            <input type="text" name="Name" autocomplete="name" required>
           </label>
 
-          <button class="magnetic" type="submit">Send request</button>
-          <p class="form-message" id="formMessage" aria-live="polite"></p>
+          <label>
+            Email
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+
+          <label>
+            Phone <span class="field-optional">optional</span>
+            <input type="tel" name="Phone" autocomplete="tel">
+          </label>
+
+          <button class="magnetic" type="submit"><span class="button-label">Send request</span></button>
+          <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
         </form>
       </div>
     </section>
-  </main>
+    </main>
 
   <footer class="site-footer">
     <p>

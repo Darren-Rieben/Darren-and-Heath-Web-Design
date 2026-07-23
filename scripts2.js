@@ -271,6 +271,117 @@
     reducedMotion.addEventListener?.("change", start);
   }
 
+
+  function initShootingStar() {
+    const star = document.getElementById("shootingStar");
+    if (!(star instanceof HTMLAnchorElement) || reducedMotion.matches) return;
+
+    let timer = 0;
+    let flight = null;
+    let isPausedByPointer = false;
+
+    const randomBetween = (minimum, maximum) => minimum + Math.random() * (maximum - minimum);
+
+    const schedule = (minimum = 28000, maximum = 60000) => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(launch, randomBetween(minimum, maximum));
+    };
+
+    const makeRoute = () => {
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const margin = 150;
+      const direction = Math.random() < 0.5 ? 1 : -1;
+      const startX = direction > 0 ? -margin : width + margin;
+      const endX = direction > 0 ? width + margin : -margin;
+      const startY = Math.random() < 0.76
+        ? randomBetween(height * 0.08, height * 0.34)
+        : randomBetween(height * 0.64, height * 0.82);
+      const verticalTravel = randomBetween(height * 0.12, height * 0.28) * (Math.random() < 0.76 ? 1 : -1);
+      const endY = Math.max(-80, Math.min(height + 80, startY + verticalTravel));
+      const angle = Math.atan2(endY - startY, endX - startX) * (180 / Math.PI);
+
+      return { startX, startY, endX, endY, angle };
+    };
+
+    const finish = () => {
+      star.classList.remove("is-active");
+      star.tabIndex = -1;
+      flight = null;
+      isPausedByPointer = false;
+      schedule();
+    };
+
+    function launch() {
+      if (document.hidden || flight) {
+        schedule(5000, 9000);
+        return;
+      }
+
+      const route = makeRoute();
+      const duration = randomBetween(1450, 2050);
+      star.classList.add("is-active");
+      star.tabIndex = 0;
+
+      flight = star.animate(
+        [
+          {
+            transform: `translate3d(${route.startX}px, ${route.startY}px, 0) rotate(${route.angle}deg) scale(0.82)`,
+            opacity: 0
+          },
+          {
+            offset: 0.12,
+            opacity: 0.9
+          },
+          {
+            offset: 0.82,
+            opacity: 0.88
+          },
+          {
+            transform: `translate3d(${route.endX}px, ${route.endY}px, 0) rotate(${route.angle}deg) scale(1)`,
+            opacity: 0
+          }
+        ],
+        {
+          duration,
+          easing: "cubic-bezier(0.22, 0.66, 0.24, 1)",
+          fill: "forwards"
+        }
+      );
+
+      flight.addEventListener("finish", finish, { once: true });
+      flight.addEventListener("cancel", finish, { once: true });
+    }
+
+    star.addEventListener("pointerenter", () => {
+      if (!flight) return;
+      isPausedByPointer = true;
+      flight.pause();
+    });
+
+    star.addEventListener("pointerleave", () => {
+      if (!flight || !isPausedByPointer) return;
+      isPausedByPointer = false;
+      flight.play();
+    });
+
+    star.addEventListener("focus", () => flight?.pause());
+    star.addEventListener("blur", () => {
+      if (flight && !isPausedByPointer) flight.play();
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        flight?.cancel();
+        window.clearTimeout(timer);
+      } else {
+        schedule(10000, 18000);
+      }
+    });
+
+    schedule(10000, 18000);
+  }
+
   function initMagneticInteractions() {
     const aura = document.getElementById("cursorAura");
     const elements = [...document.querySelectorAll(".magnetic")];
@@ -314,10 +425,51 @@
     const message = document.getElementById("formMessage");
     if (!(form instanceof HTMLFormElement) || !message) return;
 
-    form.addEventListener("submit", (event) => {
+    const submitButton = form.querySelector('button[type="submit"]');
+    const buttonLabel = submitButton?.querySelector(".button-label");
+    const endpoint = "https://formsubmit.co/ajax/darrenheathwebdev@gmail.com";
+
+    const setStatus = (text, state = "") => {
+      message.textContent = text;
+      message.classList.remove("is-success", "is-error");
+      if (state) message.classList.add(`is-${state}`);
+    };
+
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
-      message.textContent = "Thanks — your request is ready to connect to your email or form service.";
-      form.reset();
+
+      if (!form.reportValidity()) return;
+
+      submitButton?.setAttribute("disabled", "");
+      form.setAttribute("aria-busy", "true");
+      if (buttonLabel) buttonLabel.textContent = "Sending…";
+      setStatus("Sending your project details…");
+
+      try {
+        const response = await fetch(endpoint, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: new FormData(form)
+        });
+
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || result.success === false) {
+          throw new Error(result.message || "The form service could not accept the submission.");
+        }
+
+        form.reset();
+        setStatus("Thanks — your request was sent. We will reach out soon.", "success");
+      } catch (error) {
+        console.error("Contact form submission failed:", error);
+        setStatus(
+          "The form could not send right now. Please email darrenheathwebdev@gmail.com directly.",
+          "error"
+        );
+      } finally {
+        submitButton?.removeAttribute("disabled");
+        form.removeAttribute("aria-busy");
+        if (buttonLabel) buttonLabel.textContent = "Send request";
+      }
     });
   }
 
@@ -326,6 +478,7 @@
     initTypedHeadings();
     initRevealAnimations();
     initStarfield();
+    initShootingStar();
     initMagneticInteractions();
     initContactForm();
   }
