@@ -3,58 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Darren and Heath Web Design creates modern, minimal websites built to stand out.">
+  <meta name="Business Description" content="Darren and Heath Web Design creates modern, streamlined websites built to stand out and convert.">
+  <meta name="theme-color" content="#06080d">
   <title>Darren and Heath Web Design</title>
+
   <link rel="stylesheet" href="styles.css">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
+  <script src="scripts.js" defer></script>
 </head>
 <body>
-  <div class="grid-background" aria-hidden="true">
-    <div class="grid-background__grid"></div>
-    <div class="grid-background__sweep"></div>
-    <div class="grid-background__focus"></div>
-    <div class="grid-background__ring grid-background__ring--one"></div>
-    <div class="grid-background__ring grid-background__ring--two"></div>
+  <div class="space-background" aria-hidden="true">
+    <canvas class="starfield" id="starfield"></canvas>
+    <div class="space-background__glow"></div>
+    <div class="space-background__vignette"></div>
   </div>
+  <div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
+
+  <a
+    class="shooting-star"
+    id="shootingStar"
+    href="dinosaur.html"
+    aria-label="Open the hidden dinosaur page"
+    title="You found a shooting star"
+    tabindex="-1"
+  >
+    <span class="shooting-star__tail" aria-hidden="true"></span>
+    <span class="shooting-star__spark shooting-star__spark--one" aria-hidden="true"></span>
+    <span class="shooting-star__spark shooting-star__spark--two" aria-hidden="true"></span>
+    <span class="shooting-star__core" aria-hidden="true"></span>
+  </a>
 
   <header class="site-header">
-    <a class="site-brand" href="#divider-1">Darren and Heath Web Design</a>
+    <a class="site-brand magnetic" href="#home">Darren + Heath</a>
     <nav class="header-nav" aria-label="Primary navigation">
-      <a href="#divider-1">Do web design differently, with us</a>
-      <a href="#divider-2">Our Portfolio</a>
-      <a href="#divider-4">What our clients say</a>
-      <a href="#divider-5">Start a project</a>
+      <a class="magnetic" href="#portfolio">Portfolio</a>
+      <a class="magnetic" href="#about">About</a>
+      <a class="magnetic" href="#clients">Clients</a>
+      <a class="magnetic" href="#contact">Contact</a>
     </nav>
   </header>
 
   <main>
-    <section class="snap-section" id="divider-1">
-      <div class="section-inner hero-layout">
+    <section class="page-section hero-section" id="home">
+      <div class="section-inner hero-layout" data-reveal="fade-up">
         <div class="hero-copy">
+          <p class="eyebrow">Independent web design studio</p>
           <h1 class="typed-title" data-text="Do web design differently, with us" aria-label="Do web design differently, with us">
             <span class="typed-content">Do web design differently, with us</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h1>
-          <p>
-            Help your business stand out with a clean, modern website that is easy to navigate and optimized for conversions. We focus on creating a unique brand identity and user experience that resonates with your customers.
+          <p class="hero-description">
+            Help your business stand out with a clean, modern website that is easy to navigate and optimized for conversions. We create focused digital experiences that make your brand feel credible from the first click.
           </p>
+          <div class="hero-actions">
+            <a class="button button--primary magnetic" href="#contact">Start a project</a>
+            <a class="button button--quiet magnetic" href="#portfolio">View our work</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="snap-section" id="divider-2">
+    <section class="page-section" id="portfolio">
       <div class="section-inner portfolio-layout">
-        <div>
+        <div class="section-copy" data-reveal="left">
+          <p class="eyebrow">Selected work</p>
           <h2 class="typed-title" data-text="Our Portfolio" data-animate-on-view="true">
             <span class="typed-content">Our Portfolio</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
           <p>
-           Bespoke web applications built for performance and polish. Explore our recent work to see how we help brands stand out, engage users, and drive results.
+            Focused websites that balance visual identity, usability, and clear conversion paths. Each project is designed for the business instead of copied from a generic template.
           </p>
         </div>
 
         <div class="portfolio-grid" aria-label="Portfolio projects">
-          <article class="portfolio-card featured">
-            <a class="portfolio-preview-link" href="https://lakenormanboatdetailing.com/" target="_blank" rel="noopener noreferrer">
+          <article class="portfolio-card magnetic" data-reveal="card">
+            <a class="portfolio-preview-link" href="https://lakenormanboatdetailing.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Lake Norman Boat Detailing website">
               <div class="portfolio-preview-frame-wrap">
                 <iframe
                   class="portfolio-preview-frame"
@@ -64,12 +86,16 @@
                   referrerpolicy="no-referrer-when-downgrade"
                 ></iframe>
                 <div class="portfolio-preview-overlay" aria-hidden="true"></div>
+                <div class="project-meta">
+                  <span>Service business</span>
+                  <strong>Lake Norman Boat Detailing</strong>
+                </div>
               </div>
             </a>
           </article>
 
-          <article class="portfolio-card featured">
-            <a class="portfolio-preview-link" href="https://heathlyon.github.io/HeathLyonPortfolio/" target="_blank" rel="noopener noreferrer">
+          <article class="portfolio-card magnetic" data-reveal="card">
+            <a class="portfolio-preview-link" href="https://heathlyon.github.io/HeathLyonPortfolio/" target="_blank" rel="noopener noreferrer" aria-label="Open Heath Lyon portfolio website">
               <div class="portfolio-preview-frame-wrap">
                 <iframe
                   class="portfolio-preview-frame"
@@ -79,56 +105,69 @@
                   referrerpolicy="no-referrer-when-downgrade"
                 ></iframe>
                 <div class="portfolio-preview-overlay" aria-hidden="true"></div>
+                <div class="project-meta">
+                  <span>Personal portfolio</span>
+                  <strong>Heath Lyon</strong>
+                </div>
               </div>
             </a>
           </article>
 
-          <article class="portfolio-card">Reserve your spot.</article>
-          <article class="portfolio-card">Reserve your spot.</article>
+          <article class="portfolio-card portfolio-card--placeholder magnetic" data-reveal="card">
+            <span>Next project</span>
+            <strong>Your site could be here.</strong>
+          </article>
+
+          <article class="portfolio-card portfolio-card--placeholder magnetic" data-reveal="card">
+            <span>Now booking</span>
+            <strong>Built around your business.</strong>
+          </article>
         </div>
       </div>
     </section>
 
-    <section class="snap-section" id="divider-3">
+    <section class="page-section about-section" id="about">
       <div class="section-inner about-layout">
-        <div class="about-copy">
-          <h2 class="typed-title" data-text="About us" data-animate-on-view="true">
-            <span class="typed-content">About us</span><span class="typing-cursor" aria-hidden="true">|</span>
+        <header class="about-heading" data-reveal="top">
+          <p class="eyebrow">The people behind the work</p>
+          <h2 class="typed-title" data-text="Meet us" data-animate-on-view="true">
+            <span class="typed-content">Meet us</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
           <p>
-            Your website is your most valuable sales asset. We design and develop bespoke web applications that pair minimal, deliberate design with scalable architecture—helping businesses cut through the noise and turn casual visitors into loyal clients.
+            Work directly with the people designing and building your website. Clear communication, focused decisions, and no unnecessary layers.
           </p>
-        </div>
+        </header>
 
         <div class="about-people">
-          <article class="about-person">
+          <article class="about-person about-person--darren" data-reveal="person-left" data-reveal-delay="80">
+            <span class="about-line" aria-hidden="true"></span>
+            <p class="about-role">Co-founder</p>
             <h3 class="about-name">Darren Rieben</h3>
             <p>
               Darren has been engineering custom web applications for over 5 years. Focused on performance and conversion strategy, he builds scalable digital systems designed to elevate brand credibility and grow client revenue.
             </p>
           </article>
 
-          <div class="about-model">
+          <div class="about-model" data-reveal="model" data-reveal-delay="220">
+            <div class="model-halo" aria-hidden="true"></div>
             <div class="scan-shell" aria-label="Interactive 3D model viewer">
               <model-viewer
                 id="heroModel"
                 class="hero-model"
                 src="assets/3dmodel.glb"
-                alt="Interactive 3D model."
-                loading="eager"
+                alt="Interactive 3D model representing Darren and Heath Web Design."
+                loading="lazy"
                 reveal="auto"
                 camera-controls
                 auto-rotate
                 auto-rotate-delay="1400"
                 rotation-per-second="8deg"
                 interaction-prompt="none"
-                interaction-prompt-style="basic"
-                interaction-prompt-threshold="1800"
                 disable-zoom
                 touch-action="pan-y"
-                shadow-intensity="1.25"
-                shadow-softness="0.8"
-                exposure="1.15"
+                shadow-intensity="0.7"
+                shadow-softness="0.9"
+                exposure="1.08"
                 environment-image="neutral"
                 camera-orbit="30deg 72deg 105%"
                 min-camera-orbit="auto 25deg 55%"
@@ -136,105 +175,123 @@
                 min-field-of-view="20deg"
                 max-field-of-view="55deg"
                 interpolation-decay="90"
-              ></model-viewer>
+              >
+                <div class="model-poster" slot="poster" aria-hidden="true">
+                  <span class="model-poster__orb"></span>
+                </div>
+              </model-viewer>
+
+              <div class="model-status" id="modelStatus" role="status" aria-live="polite">
+                <span class="model-status__dot" aria-hidden="true"></span>
+                <span id="modelStatusText">Loading 3D model…</span>
+              </div>
             </div>
+            <p class="model-caption">Drag to explore</p>
           </div>
 
-          <article class="about-person">
-            <h3 class="about-name">Heath Leon</h3>
+          <article class="about-person about-person--heath" data-reveal="person-right" data-reveal-delay="360">
+            <span class="about-line" aria-hidden="true"></span>
+            <p class="about-role">Co-founder</p>
+            <h3 class="about-name">Heath Lyon</h3>
             <p>
-              Add Heath's introduction here. This paragraph can cover his background, design instincts, technical skills, and the value he adds for clients.
+              Creative, technically minded, and detail-oriented, Heath combines web design expertise with professional video production experience. He brings a strong visual eye, practical problem-solving skills, and a passion for creating polished digital experiences that feel both artistic and purposeful.
             </p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="snap-section" id="divider-4">
+    <section class="page-section" id="clients">
       <div class="section-inner testimonial-shell">
-        <div>
-          <h2 class="typed-title" data-text="What our clients have said about us. . ." data-animate-on-view="true">
-            <span class="typed-content">What our clients have said about us. . .</span><span class="typing-cursor" aria-hidden="true">|</span>
+        <div class="section-copy" data-reveal="fade-up">
+          <p class="eyebrow">Client experience</p>
+          <h2 class="typed-title" data-text="What our clients say" data-animate-on-view="true">
+            <span class="typed-content">What our clients say</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
         </div>
 
-        <div class="testimonial-track" id="testimonialTrack" aria-label="Client reviews">
-          <article class="testimonial">
-            <p>
-              “Darren knows what he is doing!! Super easy to work with. Did a fantastic job on building my website. He takes Pride and is extremely detailed in his work!”
+        <div class="testimonial-grid">
+          <article class="testimonial magnetic" data-reveal="card">
+            <p>“Darren knows what he is doing!! Super easy to work with. Did a fantastic job on building my website. He takes Pride and is extremely detailed in his work!”
             </p>
-            <div class="testimonial-meta">
-              <span class="review-source review-source--google" aria-label="Google review source">Google Review</span>
-              <strong>Dallin</strong>
-            </div>
+            <strong>Dallin</strong>
           </article>
 
-          <article class="testimonial">
-            <p>
-              “I am writing to wholeheartedly recommend Darren Rieben and Heath Leon. I was able to see their passion for helping me and others firsthand.”
-            </p>
-            <div class="testimonial-meta">
-              <span class="review-source review-source--word" aria-label="Word of mouth source">
-                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                  <path d="M3 11h4l5-4v10l-5-4H3z"></path>
-                  <path d="M15 9.5a4 4 0 0 1 0 5"></path>
-                  <path d="M17.7 7.2a7 7 0 0 1 0 9.6"></path>
-                </svg>
-                <span>Word of Mouth</span>
-              </span>
-              <strong>Derrick</strong>
-            </div>
+          <article class="testimonial magnetic" data-reveal="card">
+            <p>“I am writing to wholeheartedly recommend Darren Rieben and Heath Lyon. I was able to see their passion for helping me and others firsthand.”</p>
+            <strong>Derick</strong>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="snap-section" id="divider-5">
+    <section class="page-section" id="contact">
       <div class="section-inner contact-layout">
-        <div>
-          <h2 class="typed-title" data-text="Contact Us" data-animate-on-view="true">
-            <span class="typed-content">Contact Us</span><span class="typing-cursor" aria-hidden="true">|</span>
+        <div class="section-copy" data-reveal="left">
+          <p class="eyebrow">Tell us what you are building</p>
+          <h2 class="typed-title" data-text="Start a project" data-animate-on-view="true">
+            <span class="typed-content">Start a project</span><span class="typing-cursor" aria-hidden="true">|</span>
           </h2>
-          <p>Reach out and we will reach back out with details.</p>
+          <p>Share the essentials. We will review the project and reach out with practical next steps.</p>
         </div>
 
-        <form class="contact-form" id="contactForm">
+        <form
+          class="contact-form"
+          id="contactForm"
+          data-reveal="right"
+          action="https://formsubmit.co/darrenheathwebdev@gmail.com"
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="New Darren + Heath website inquiry">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
+          <label class="form-honeypot" aria-hidden="true">
+            Leave this field empty
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off">
+          </label>
           <label>
-            Name of Business
-            <input type="text" name="businessName" required>
+            Business name
+            <input type="text" name="Business Name" autocomplete="organization" required>
           </label>
 
           <label>
-            Business Description
-            <textarea name="description" required></textarea>
+            Business description
+            <textarea name="Business Description" required></textarea>
           </label>
 
           <label>
             What do you need?
-            <textarea name="needs" required></textarea>
+            <textarea name="Project Needs" required></textarea>
           </label>
 
           <label>
-            Contact Info (email or phone)
-            <input type="text" name="contactInfo" required>
+            Your name
+            <input type="text" name="Name" autocomplete="name" required>
           </label>
 
-          <button type="submit">Send Request</button>
-          <p class="form-message" id="formMessage" aria-live="polite"></p>
+          <label>
+            Email
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+
+          <label>
+            Phone <span class="field-optional">optional</span>
+            <input type="tel" name="Phone" autocomplete="tel">
+          </label>
+
+          <button class="magnetic" type="submit"><span class="button-label">Send request</span></button>
+          <p class="form-message" id="formMessage" role="status" aria-live="polite"></p>
         </form>
       </div>
     </section>
-  </main>
+    </main>
 
   <footer class="site-footer">
     <p>
-      Contact us:
-      <a href="mailto:darrenheathwebdev@gmail.com">darrenheathwebdev@gmail.com</a>
-      <span aria-hidden="true"> | </span>
-      <a href="tel:9805407648">980-540-7648</a>
+      <span>Darren + Heath Web Design</span>
+      <a class="magnetic" href="mailto:darrenheathwebdev@gmail.com">darrenheathwebdev@gmail.com</a>
+      <a class="magnetic" href="tel:9805407648">980-540-7648</a>
     </p>
   </footer>
-
-  <script src="scripts.js?v=3" defer></script>
 </body>
 </html>
