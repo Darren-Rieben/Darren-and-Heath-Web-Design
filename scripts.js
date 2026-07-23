@@ -316,7 +316,7 @@
 
     form.addEventListener("submit", (event) => {
       event.preventDefault();
-      message.textContent = "Thanks — your request is ready to connect to your email or form service.";
+      message.textContent = "";
       form.reset();
     });
   }
