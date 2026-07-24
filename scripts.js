@@ -871,7 +871,7 @@
 
     const submitButton = form.querySelector('button[type="submit"]');
     const buttonLabel = submitButton?.querySelector(".button-label");
-    const endpoint = "https://formsubmit.co/ajax/darrenheathwebdev@gmail.com";
+    const endpoint = "https://formspree.io/f/xlgqoejy";
 
     const setStatus = (text, state = "") => {
       message.textContent = text;
