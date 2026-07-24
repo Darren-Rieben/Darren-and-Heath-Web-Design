@@ -14,33 +14,48 @@
     backgroundMode: "dynamic", // "dynamic" or "static"
     cursorColorShift: true,
     starColors: {
-      far: "#d8dde6",
-      middle: "#f2f5f9",
+      far: "#dfe5ee",
+      middle: "#f5f7fb",
       near: "#ffffff",
-      interaction: "#8bcfff"
+      interaction: "#a7dcff"
     },
-    density: 1.15,
+    naturalStarColors: [
+      "#ffffff",
+      "#e8f3ff",
+      "#fff3df",
+      "#f4f7ff",
+      "#ffe8cf"
+    ],
+    naturalColorStrength: 0.18,
+    density: 1.18,
     maxFps: 30,
     maxDpr: 1.25,
-    interactionRadius: 185,
-    movingStarFraction: 0.28,
-    fastStarFraction: 0.035,
-    colorShiftAmount: 0.16,
+    interactionRadius: 205,
+    movingStarFraction: 0.32,
+    fastStarFraction: 0.045,
+    colorShiftAmount: 0.14,
+    trailLength: 15,
+    trailLifetime: 460,
     dynamic: {
       farSpeed: 0.0028,
       middleSpeed: 0.0058,
       nearSpeed: 0.0098,
-      fastMinSpeed: 0.019,
-      fastMaxSpeed: 0.032
+      fastMinSpeed: 0.021,
+      fastMaxSpeed: 0.036
     }
   });
 
-  function initModelViewer() {
-    const model = document.getElementById("heroModel");
+  function initModelViewers() {
+    const viewers = [...document.querySelectorAll(".person-model model-viewer")];
+    const aboutPeople = document.getElementById("aboutPeople");
     const status = document.getElementById("modelStatus");
     const statusText = document.getElementById("modelStatusText");
 
-    if (!model) return;
+    if (viewers.length === 0) return;
+
+    let loadedCount = 0;
+    let failedCount = 0;
+    let sectionVisible = true;
 
     const setStatus = (message, state = "loading") => {
       if (!status || !statusText) return;
@@ -49,23 +64,48 @@
       status.classList.toggle("is-error", state === "error");
     };
 
-    model.addEventListener("load", () => {
-      setStatus("3D model loaded", "loaded");
-    });
+    const updateStatus = () => {
+      if (failedCount > 0) {
+        setStatus(
+          failedCount === viewers.length
+            ? "Could not load the 3D models"
+            : "One 3D model could not load",
+          "error"
+        );
+        return;
+      }
 
-    model.addEventListener("error", (event) => {
-      console.error("Unable to load assets/3dmodel.glb", event);
-      setStatus("Could not load assets/3dmodel.glb", "error");
-    });
+      if (loadedCount === viewers.length) {
+        setStatus("3D models loaded", "loaded");
+      } else {
+        setStatus(`Loading 3D models… ${loadedCount}/${viewers.length}`);
+      }
+    };
 
-    if ("IntersectionObserver" in window && !reducedMotion.matches) {
-      model.removeAttribute("auto-rotate");
-      const rotationObserver = new IntersectionObserver((entries) => {
-        const visible = entries.some((entry) => entry.isIntersecting);
-        model.toggleAttribute("auto-rotate", visible);
-      }, { rootMargin: "180px 0px", threshold: 0.05 });
-      rotationObserver.observe(model);
-    }
+    const updateRotation = () => {
+      const activePerson = aboutPeople?.dataset.activePerson || "none";
+      viewers.forEach((viewer) => {
+        const person = viewer.closest("[data-model-person]")?.dataset.modelPerson || "";
+        const shouldRotate =
+          sectionVisible &&
+          !reducedMotion.matches &&
+          (activePerson === "none" || activePerson === person);
+        viewer.toggleAttribute("auto-rotate", shouldRotate);
+      });
+    };
+
+    viewers.forEach((viewer) => {
+      viewer.addEventListener("load", () => {
+        loadedCount += 1;
+        updateStatus();
+      }, { once: true });
+
+      viewer.addEventListener("error", (event) => {
+        failedCount += 1;
+        console.error(`Unable to load ${viewer.getAttribute("src") || "3D model"}`, event);
+        updateStatus();
+      }, { once: true });
+    });
 
     const viewerReady = customElements.get("model-viewer")
       ? Promise.resolve()
@@ -76,10 +116,100 @@
       new Promise((_, reject) => {
         window.setTimeout(() => reject(new Error("model-viewer library timed out")), 10000);
       })
-    ]).catch((error) => {
+    ]).then(updateRotation).catch((error) => {
       console.error(error);
       setStatus("3D viewer library failed to load", "error");
     });
+
+    const aboutSection = document.getElementById("about");
+    if (aboutSection && "IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries) => {
+        sectionVisible = entries.some((entry) => entry.isIntersecting);
+        updateRotation();
+      }, { rootMargin: "180px 0px", threshold: 0.04 });
+      observer.observe(aboutSection);
+    }
+
+    window.addEventListener("model-focus-change", updateRotation);
+    reducedMotion.addEventListener?.("change", updateRotation);
+  }
+
+  function initProfileModelFocus() {
+    const container = document.getElementById("aboutPeople");
+    const stage = container?.querySelector(".dual-model-stage");
+    const profiles = container ? [...container.querySelectorAll("[data-person]")] : [];
+    if (!container || !stage || profiles.length === 0) return;
+
+    let stickyPerson = "";
+    let resetTimer = 0;
+
+    const cancelReset = () => {
+      window.clearTimeout(resetTimer);
+      resetTimer = 0;
+    };
+
+    const setActive = (person = "none") => {
+      const normalized = person === "darren" || person === "heath" ? person : "none";
+      container.dataset.activePerson = normalized;
+
+      profiles.forEach((profile) => {
+        const active = profile.dataset.person === normalized;
+        profile.classList.toggle("is-profile-active", active);
+        profile.setAttribute("aria-pressed", String(active && stickyPerson === normalized));
+      });
+
+      window.dispatchEvent(new CustomEvent("model-focus-change", {
+        detail: { person: normalized }
+      }));
+    };
+
+    const scheduleReset = () => {
+      cancelReset();
+      resetTimer = window.setTimeout(() => {
+        setActive(stickyPerson || "none");
+      }, 210);
+    };
+
+    profiles.forEach((profile) => {
+      const person = profile.dataset.person || "";
+
+      profile.addEventListener("pointerenter", () => {
+        cancelReset();
+        setActive(person);
+      });
+
+      profile.addEventListener("pointerleave", scheduleReset);
+      profile.addEventListener("focus", () => {
+        cancelReset();
+        setActive(person);
+      });
+      profile.addEventListener("blur", scheduleReset);
+
+      profile.addEventListener("click", () => {
+        const wasSticky = stickyPerson === person;
+        stickyPerson = wasSticky ? "" : person;
+        setActive(stickyPerson || (finePointer.matches ? person : "none"));
+      });
+
+      profile.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        event.preventDefault();
+        profile.click();
+      });
+    });
+
+    stage.addEventListener("pointerenter", cancelReset);
+    stage.addEventListener("pointerleave", scheduleReset);
+    stage.addEventListener("focusin", cancelReset);
+    stage.addEventListener("focusout", scheduleReset);
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key !== "Escape") return;
+      stickyPerson = "";
+      setActive("none");
+    });
+
+    setActive("none");
   }
 
   function initTypedHeadings() {
@@ -188,7 +318,8 @@
       y: window.innerHeight / 2,
       inside: false,
       magneticStrength: 0,
-      targetMagneticStrength: 0
+      targetMagneticStrength: 0,
+      trail: []
     };
 
     let width = 0;
@@ -227,13 +358,14 @@
       far: hexToRgb(BACKGROUND_SETTINGS.starColors.far),
       middle: hexToRgb(BACKGROUND_SETTINGS.starColors.middle),
       near: hexToRgb(BACKGROUND_SETTINGS.starColors.near),
-      interaction: hexToRgb(BACKGROUND_SETTINGS.starColors.interaction)
+      interaction: hexToRgb(BACKGROUND_SETTINGS.starColors.interaction),
+      natural: BACKGROUND_SETTINGS.naturalStarColors.map(hexToRgb)
     };
 
     const chooseLayer = () => {
       const value = Math.random();
-      if (value < 0.58) return "far";
-      if (value < 0.9) return "middle";
+      if (value < 0.57) return "far";
+      if (value < 0.89) return "middle";
       return "near";
     };
 
@@ -249,28 +381,32 @@
       const moving = isFast || Math.random() < BACKGROUND_SETTINGS.movingStarFraction;
       const fastSpeed = BACKGROUND_SETTINGS.dynamic.fastMinSpeed
         + Math.random() * (BACKGROUND_SETTINGS.dynamic.fastMaxSpeed - BACKGROUND_SETTINGS.dynamic.fastMinSpeed);
+      const baseColor = palette[layer];
+      const naturalColor = palette.natural[Math.floor(Math.random() * palette.natural.length)];
+      const temperatureMix = Math.random() * BACKGROUND_SETTINGS.naturalColorStrength;
 
       return {
         layer,
         depth,
         moving,
         isFast,
+        baseColor: mixRgb(baseColor, naturalColor, temperatureMix),
         x: Math.random() * Math.max(width, 1),
         y: Math.random() * Math.max(height, 1),
         radius: isFast
-          ? 1.35 + Math.random() * 0.75
-          : (0.5 + depth * 0.72) * (0.72 + Math.random() * 0.46),
-        velocityX: isFast ? (Math.random() - 0.5) * 0.008 : (Math.random() - 0.5) * 0.0012,
-        velocityY: moving ? -(isFast ? fastSpeed : speed * (0.72 + Math.random() * 0.58)) : 0,
-        alpha: isFast ? 0.68 + Math.random() * 0.18 : 0.3 + depth * 0.42 + Math.random() * 0.12,
+          ? 1.55 + Math.random() * 0.9
+          : (0.52 + depth * 0.76) * (0.72 + Math.random() * 0.5),
+        velocityX: isFast ? (Math.random() - 0.5) * 0.01 : (Math.random() - 0.5) * 0.0014,
+        velocityY: moving ? -(isFast ? fastSpeed : speed * (0.72 + Math.random() * 0.62)) : 0,
+        alpha: isFast ? 0.74 + Math.random() * 0.18 : 0.36 + depth * 0.44 + Math.random() * 0.14,
         pulse: Math.random() * Math.PI * 2,
-        pulseSpeed: 0.00012 + Math.random() * 0.00022
+        pulseSpeed: 0.0001 + Math.random() * 0.00024
       };
     };
 
     const resetStars = () => {
-      const baseCount = Math.min(260, Math.max(112, Math.round((width * height) / 10000)));
-      const count = Math.round(baseCount * clamp(BACKGROUND_SETTINGS.density, 0.35, 1.2));
+      const baseCount = Math.min(360, Math.max(145, Math.round((width * height) / 7600)));
+      const count = Math.round(baseCount * clamp(BACKGROUND_SETTINGS.density, 0.35, 1.45));
       stars = Array.from({ length: count }, createStar);
     };
 
@@ -287,8 +423,29 @@
     };
 
     const recycleStar = (star) => {
-      star.y = height + 10 + Math.random() * 26;
+      star.y = height + 10 + Math.random() * 30;
       star.x = Math.random() * width;
+    };
+
+    const drawTrail = (time) => {
+      if (!pointer.inside || reducedMotion.matches || pointer.trail.length < 2) return;
+
+      pointer.trail = pointer.trail.filter((point) => time - point.time < BACKGROUND_SETTINGS.trailLifetime);
+      for (let index = 1; index < pointer.trail.length; index += 1) {
+        const previous = pointer.trail[index - 1];
+        const current = pointer.trail[index];
+        const age = time - current.time;
+        const life = clamp(1 - age / BACKGROUND_SETTINGS.trailLifetime, 0, 1);
+        const alpha = life * (0.035 + pointer.magneticStrength * 0.055);
+        if (alpha <= 0.002) continue;
+
+        context.strokeStyle = `rgba(162, 216, 255, ${alpha})`;
+        context.lineWidth = 0.55 + life * 0.8;
+        context.beginPath();
+        context.moveTo(previous.x, previous.y);
+        context.lineTo(current.x, current.y);
+        context.stroke();
+      }
     };
 
     const draw = (time) => {
@@ -301,6 +458,7 @@
         (pointer.targetMagneticStrength - pointer.magneticStrength) * 0.16;
 
       context.clearRect(0, 0, width, height);
+      drawTrail(time);
 
       for (const star of stars) {
         if (mode === "dynamic" && star.moving && !reducedMotion.matches) {
@@ -314,7 +472,6 @@
 
         let x = star.x;
         let y = star.y;
-        let proximity = 0;
         let colorBlend = 0;
         let closeGlow = 0;
         let outerDim = 0;
@@ -323,41 +480,40 @@
           const dx = pointer.x - x;
           const dy = pointer.y - y;
           const distance = Math.hypot(dx, dy);
-          proximity = clamp(1 - distance / BACKGROUND_SETTINGS.interactionRadius, 0, 1);
+          const proximity = clamp(1 - distance / BACKGROUND_SETTINGS.interactionRadius, 0, 1);
 
           if (proximity > 0) {
             const eased = proximity * proximity * (3 - 2 * proximity);
-            const magneticBoost = 0.62 + pointer.magneticStrength * 0.38;
-            const pull = eased * magneticBoost * (0.006 + star.depth * 0.008);
-            const swirl = eased * (0.0015 + star.depth * 0.0022);
+            const magneticBoost = 0.58 + pointer.magneticStrength * 0.42;
+            const pull = eased * magneticBoost * (0.0065 + star.depth * 0.0085);
+            const swirl = eased * (0.0017 + star.depth * 0.0025);
 
             x += dx * pull - dy * swirl;
             y += dy * pull + dx * swirl;
 
-            closeGlow = Math.pow(proximity, 3.1);
-            outerDim = Math.sin(Math.PI * proximity) * (1 - closeGlow) * 0.11;
+            closeGlow = Math.pow(proximity, 3.05);
+            outerDim = Math.sin(Math.PI * proximity) * (1 - closeGlow) * 0.09;
             colorBlend = Math.min(
               BACKGROUND_SETTINGS.colorShiftAmount,
-              eased * (0.035 + pointer.magneticStrength * 0.11)
+              eased * (0.026 + pointer.magneticStrength * 0.085)
             );
           }
         }
 
-        const baseColor = palette[star.layer];
         const color = BACKGROUND_SETTINGS.cursorColorShift
-          ? mixRgb(baseColor, palette.interaction, colorBlend)
-          : baseColor;
-        const pulse = 0.89 + Math.sin(time * star.pulseSpeed + star.pulse) * 0.11;
+          ? mixRgb(star.baseColor, palette.interaction, colorBlend)
+          : star.baseColor;
+        const pulse = 0.88 + Math.sin(time * star.pulseSpeed + star.pulse) * 0.12;
         const alpha = clamp(
-          star.alpha * pulse * (1 - outerDim) + closeGlow * (0.24 + pointer.magneticStrength * 0.1),
-          0.08,
+          star.alpha * pulse * (1 - outerDim) + closeGlow * (0.25 + pointer.magneticStrength * 0.1),
+          0.1,
           1
         );
-        const radius = star.radius + closeGlow * (star.isFast ? 0.54 : 0.36);
+        const radius = star.radius + closeGlow * (star.isFast ? 0.62 : 0.4);
 
         context.fillStyle = `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
 
-        if (star.isFast || radius > 1.65) {
+        if (star.isFast || radius > 1.6) {
           context.beginPath();
           context.arc(x, y, radius, 0, Math.PI * 2);
           context.fill();
@@ -379,16 +535,24 @@
       pointer.x = event.clientX;
       pointer.y = event.clientY;
       pointer.inside = true;
+
+      const previous = pointer.trail[pointer.trail.length - 1];
+      if (!previous || Math.hypot(previous.x - pointer.x, previous.y - pointer.y) > 5) {
+        pointer.trail.push({ x: pointer.x, y: pointer.y, time: performance.now() });
+        if (pointer.trail.length > BACKGROUND_SETTINGS.trailLength) pointer.trail.shift();
+      }
     }, { passive: true });
 
     document.documentElement.addEventListener("mouseleave", () => {
       pointer.inside = false;
       pointer.targetMagneticStrength = 0;
+      pointer.trail.length = 0;
     });
 
     window.addEventListener("blur", () => {
       pointer.inside = false;
       pointer.targetMagneticStrength = 0;
+      pointer.trail.length = 0;
     });
 
     window.addEventListener("magnetic-proximity", (event) => {
@@ -524,12 +688,15 @@
 
   function initMagneticInteractions() {
     const aura = document.getElementById("cursorAura");
+    const warpLens = document.getElementById("cursorWarp");
     const elements = [...document.querySelectorAll(".magnetic")];
+    const warpTargets = [...document.querySelectorAll("[data-reveal], .magnetic")];
     const root = document.documentElement;
 
     if (reducedMotion.matches || elements.length === 0) return;
 
-    const activationRadius = 135;
+    const activationRadius = 145;
+    const warpRadius = 190;
     const pointer = { x: 0, y: 0, inside: false };
     let activeElement = null;
     let scheduledFrame = 0;
@@ -546,14 +713,20 @@
       element.classList.remove("is-magnetized");
     };
 
+    const resetWarp = (element) => {
+      element.style.setProperty("--warp-x", "0px");
+      element.style.setProperty("--warp-y", "0px");
+      element.style.setProperty("--warp-rotate", "0deg");
+    };
+
     const publishProximity = (strength) => {
       const normalized = clamp(strength, 0, 1);
       root.style.setProperty("--interaction-strength", normalized.toFixed(3));
       root.style.setProperty("--pointer-x", `${pointer.x}px`);
       root.style.setProperty("--pointer-y", `${pointer.y}px`);
-      root.style.setProperty("--cursor-hue", `${204 + normalized * 8}`);
-      root.style.setProperty("--cursor-saturation", `${Math.round(10 + normalized * 90)}%`);
-      root.style.setProperty("--cursor-lightness", `${Math.round(88 - normalized * 24)}%`);
+      root.style.setProperty("--cursor-hue", `${204 + normalized * 7}`);
+      root.style.setProperty("--cursor-saturation", `${Math.round(16 + normalized * 68)}%`);
+      root.style.setProperty("--cursor-lightness", `${Math.round(88 - normalized * 20)}%`);
 
       window.dispatchEvent(new CustomEvent("magnetic-proximity", {
         detail: { x: pointer.x, y: pointer.y, strength: normalized }
@@ -562,7 +735,13 @@
       if (aura) {
         aura.style.left = `${pointer.x}px`;
         aura.style.top = `${pointer.y}px`;
-        aura.classList.toggle("is-visible", normalized > 0.025);
+        aura.classList.toggle("is-visible", pointer.inside);
+      }
+
+      if (warpLens) {
+        warpLens.style.left = `${pointer.x}px`;
+        warpLens.style.top = `${pointer.y}px`;
+        warpLens.classList.toggle("is-visible", pointer.inside);
       }
     };
 
@@ -570,6 +749,32 @@
       const dx = Math.max(rect.left - x, 0, x - rect.right);
       const dy = Math.max(rect.top - y, 0, y - rect.bottom);
       return Math.hypot(dx, dy);
+    };
+
+    const updateWarpTargets = () => {
+      for (const element of warpTargets) {
+        const rect = element.getBoundingClientRect();
+        if (rect.width === 0 || rect.height === 0) continue;
+
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const distance = Math.hypot(pointer.x - centerX, pointer.y - centerY);
+        const rawStrength = clamp(1 - distance / warpRadius, 0, 1);
+
+        if (!pointer.inside || rawStrength <= 0) {
+          resetWarp(element);
+          continue;
+        }
+
+        const strength = rawStrength * rawStrength;
+        const moveX = clamp((pointer.x - centerX) * 0.008 * strength, -3.2, 3.2);
+        const moveY = clamp((pointer.y - centerY) * 0.007 * strength, -2.8, 2.8);
+        const rotate = clamp((pointer.x - centerX) / Math.max(rect.width, 1) * 0.34 * strength, -0.24, 0.24);
+
+        element.style.setProperty("--warp-x", `${moveX.toFixed(2)}px`);
+        element.style.setProperty("--warp-y", `${moveY.toFixed(2)}px`);
+        element.style.setProperty("--warp-rotate", `${rotate.toFixed(3)}deg`);
+      }
     };
 
     const update = (time) => {
@@ -580,6 +785,8 @@
         return;
       }
       lastMagneticFrame = time;
+
+      updateWarpTargets();
 
       if (!pointer.inside) {
         resetElement(activeElement);
@@ -618,9 +825,9 @@
       const strength = rawStrength * rawStrength * (3 - 2 * rawStrength);
       const centerX = nearestRect.left + nearestRect.width / 2;
       const centerY = nearestRect.top + nearestRect.height / 2;
-      const isLargeSurface = nearest.matches(".portfolio-card, .testimonial");
-      const maxMovement = isLargeSurface ? 7 : 11;
-      const movementFactor = isLargeSurface ? 0.035 : 0.075;
+      const isLargeSurface = nearest.matches(".portfolio-card, .testimonial, .about-person");
+      const maxMovement = isLargeSurface ? 6 : 10;
+      const movementFactor = isLargeSurface ? 0.03 : 0.068;
       const moveX = clamp((pointer.x - centerX) * movementFactor * strength, -maxMovement, maxMovement);
       const moveY = clamp((pointer.y - centerY) * movementFactor * strength, -maxMovement, maxMovement);
 
@@ -711,7 +918,8 @@
   }
 
   function initSite() {
-    initModelViewer();
+    initModelViewers();
+    initProfileModelFocus();
     initTypedHeadings();
     initRevealAnimations();
     initStarfield();

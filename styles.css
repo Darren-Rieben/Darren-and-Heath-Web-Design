@@ -973,9 +973,16 @@ p {
   --magnet-x: 0px;
   --magnet-y: 0px;
   --magnet-strength: 0;
+  --warp-x: 0px;
+  --warp-y: 0px;
+  --warp-rotate: 0deg;
   transform:
-    translate3d(calc(var(--reveal-x) + var(--magnet-x)), calc(var(--reveal-y) + var(--magnet-y)), 0)
-    rotate(var(--reveal-rotate))
+    translate3d(
+      calc(var(--reveal-x) + var(--magnet-x) + var(--warp-x)),
+      calc(var(--reveal-y) + var(--magnet-y) + var(--warp-y)),
+      0
+    )
+    rotate(calc(var(--reveal-rotate) + var(--warp-rotate)))
     scale(var(--reveal-scale));
 }
 
@@ -1448,21 +1455,13 @@ p {
   .about-person:hover > p:last-child {
     color: #f2f8ff;
     text-shadow: 0 0 22px rgba(111, 197, 255, 0.2);
-    transform: translateY(-3px);
-    -webkit-transform: translateY(-3px);
-    -moz-transform: translateY(-3px);
-    -ms-transform: translateY(-3px);
-    -o-transform: translateY(-3px);
-}
+    transform: translateY(-2px);
+  }
 
   .about-person:hover > p:last-child::before {
     opacity: 1;
     transform: scale(1);
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-}
+  }
 
   .about-person:hover .about-name {
     color: #ffffff;
@@ -1473,5 +1472,230 @@ p {
     width: 112px;
     background: linear-gradient(90deg, transparent, rgba(117, 201, 255, 0.96), transparent);
     box-shadow: 0 0 18px rgba(83, 178, 255, 0.28);
+  }
+}
+
+
+/* Cursor lens: a restrained visual cue for the local warp field */
+.cursor-warp {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(-50%, -50%, 0) scale(0.82);
+  border: 1px solid hsl(var(--cursor-hue) 82% 76% / 0.08);
+  background: radial-gradient(
+    circle,
+    hsl(var(--cursor-hue) 86% 72% / 0.045),
+    transparent 64%
+  );
+  box-shadow: inset 0 0 24px hsl(var(--cursor-hue) 85% 68% / 0.035);
+  transition: opacity 120ms ease, transform 160ms var(--ease-out), border-color 160ms ease;
+}
+
+.cursor-warp.is-visible {
+  opacity: calc(0.08 + var(--interaction-strength) * 0.2);
+  transform: translate3d(-50%, -50%, 0) scale(calc(0.88 + var(--interaction-strength) * 0.18));
+}
+
+/* Dual-profile 3D stage */
+.about-people {
+  grid-template-columns: minmax(0, 1fr) minmax(340px, 440px) minmax(0, 1fr);
+}
+
+.about-person {
+  cursor: default;
+  outline: none;
+}
+
+.about-person[role="button"] {
+  cursor: pointer;
+}
+
+.about-person:focus-visible {
+  outline: 1px solid rgba(158, 215, 255, 0.58);
+  outline-offset: 12px;
+  border-radius: 12px;
+}
+
+.about-profile-hint {
+  margin-top: 18px;
+  color: rgba(220, 231, 244, 0.48);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: color 220ms ease, opacity 220ms ease;
+}
+
+.about-person:hover .about-profile-hint,
+.about-person:focus-visible .about-profile-hint,
+.about-person.is-profile-active .about-profile-hint {
+  color: rgba(159, 216, 255, 0.88);
+}
+
+.dual-model-stage {
+  position: relative;
+  width: 100%;
+  min-height: 470px;
+  overflow: visible;
+  isolation: isolate;
+}
+
+.dual-model-stage .model-halo {
+  width: min(44vw, 470px);
+  opacity: 0.76;
+}
+
+.person-model {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(92%, 410px);
+  height: 440px;
+  transform-origin: 50% 74%;
+  transition:
+    transform 720ms var(--ease-out),
+    opacity 420ms ease,
+    filter 420ms ease;
+  will-change: transform;
+}
+
+.person-model .hero-model {
+  width: 100%;
+  height: 100%;
+}
+
+.person-model--darren {
+  z-index: 2;
+  transform: translate3d(-76%, -50%, 0) scale(0.7) rotateY(8deg);
+}
+
+.person-model--heath {
+  z-index: 2;
+  transform: translate3d(-24%, -50%, 0) scale(0.7) rotateY(-8deg);
+}
+
+.person-model__label {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  color: rgba(226, 235, 247, 0.58);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: color 240ms ease, opacity 240ms ease;
+}
+
+.about-people[data-active-person="darren"] .person-model--darren,
+.about-people[data-active-person="heath"] .person-model--heath {
+  z-index: 4;
+  opacity: 1;
+  filter: saturate(1.04) brightness(1.04);
+  transform: translate3d(-50%, -50%, 40px) scale(1.03) rotateY(0deg);
+}
+
+.about-people[data-active-person="darren"] .person-model--heath {
+  z-index: 1;
+  opacity: 0.56;
+  filter: saturate(0.72) brightness(0.78);
+  pointer-events: none;
+  transform: translate3d(12%, -46%, -30px) scale(0.46) rotateY(-13deg);
+}
+
+.about-people[data-active-person="heath"] .person-model--darren {
+  z-index: 1;
+  opacity: 0.56;
+  filter: saturate(0.72) brightness(0.78);
+  pointer-events: none;
+  transform: translate3d(-112%, -46%, -30px) scale(0.46) rotateY(13deg);
+}
+
+.about-people[data-active-person="darren"] .person-model--darren .person-model__label,
+.about-people[data-active-person="heath"] .person-model--heath .person-model__label {
+  color: rgba(210, 236, 255, 0.94);
+}
+
+.about-person.is-profile-active .about-name {
+  color: #ffffff;
+  text-shadow: 0 0 30px rgba(98, 187, 255, 0.3);
+}
+
+.about-person.is-profile-active .about-line {
+  width: 118px;
+  background: linear-gradient(90deg, transparent, rgba(123, 203, 255, 0.98), transparent);
+  box-shadow: 0 0 22px rgba(81, 176, 255, 0.34);
+}
+
+.dual-model-stage .model-status {
+  left: 50%;
+  bottom: 36px;
+  transform: translateX(-50%);
+}
+
+.dual-model-stage .model-caption {
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+@media (max-width: 960px) {
+  .about-people {
+    grid-template-columns: 1fr;
+  }
+
+  .dual-model-stage {
+    width: min(100%, 520px);
+    min-height: 430px;
+    margin-inline: auto;
+  }
+
+  .person-model {
+    height: 405px;
+  }
+
+  .person-model--darren {
+    transform: translate3d(-73%, -50%, 0) scale(0.64);
+  }
+
+  .person-model--heath {
+    transform: translate3d(-27%, -50%, 0) scale(0.64);
+  }
+}
+
+@media (max-width: 620px) {
+  .dual-model-stage {
+    min-height: 370px;
+  }
+
+  .person-model {
+    width: 94%;
+    height: 350px;
+  }
+
+  .about-people[data-active-person="darren"] .person-model--heath {
+    transform: translate3d(6%, -45%, -30px) scale(0.4);
+  }
+
+  .about-people[data-active-person="heath"] .person-model--darren {
+    transform: translate3d(-106%, -45%, -30px) scale(0.4);
+  }
+
+  .about-profile-hint {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .person-model,
+  .cursor-warp {
+    transition: none;
   }
 }

@@ -7,9 +7,9 @@
   <meta name="theme-color" content="#06080d">
   <title>Darren and Heath Web Design</title>
 
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=19">
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.3.1/model-viewer.min.js"></script>
-  <script src="scripts.js" defer></script>
+  <script src="scripts.js?v=19" defer></script>
 </head>
 <body>
   <div class="space-background" aria-hidden="true">
@@ -18,6 +18,7 @@
     <div class="space-background__vignette"></div>
   </div>
   <div class="cursor-aura" id="cursorAura" aria-hidden="true"></div>
+  <div class="cursor-warp" id="cursorWarp" aria-hidden="true"></div>
 
   <a
     class="shooting-star"
@@ -138,30 +139,41 @@
           </p>
         </header>
 
-        <div class="about-people">
-          <article class="about-person about-person--darren" data-reveal="person-left" data-reveal-delay="80">
+        <div class="about-people" id="aboutPeople" data-active-person="none">
+          <article
+            class="about-person about-person--darren magnetic"
+            data-person="darren"
+            data-reveal="person-left"
+            data-reveal-delay="80"
+            tabindex="0"
+            role="button"
+            aria-pressed="false"
+            aria-controls="darrenModel"
+          >
             <span class="about-line" aria-hidden="true"></span>
             <p class="about-role">Co-founder</p>
             <h3 class="about-name">Darren Rieben</h3>
             <p>
               Darren has been engineering custom web applications for over 5 years. Focused on performance and conversion strategy, he builds scalable digital systems designed to elevate brand credibility and grow client revenue.
             </p>
+            <span class="about-profile-hint">Hover or tap to focus Darren</span>
           </article>
 
-          <div class="about-model" data-reveal="model" data-reveal-delay="220">
+          <div class="about-model dual-model-stage" data-reveal="model" data-reveal-delay="220" aria-label="Interactive 3D models of Darren and Heath">
             <div class="model-halo" aria-hidden="true"></div>
-            <div class="scan-shell" aria-label="Interactive 3D model viewer">
+
+            <div class="person-model person-model--darren" data-model-person="darren">
               <model-viewer
-                id="heroModel"
+                id="darrenModel"
                 class="hero-model"
-                src="assets/Darren.glb"
-                alt="Interactive 3D model representing Darren and Heath Web Design."
+                src="assets/1 (1).glb"
+                alt="Interactive 3D model of Darren Rieben."
                 loading="lazy"
                 reveal="auto"
                 camera-controls
                 auto-rotate
                 auto-rotate-delay="1400"
-                rotation-per-second="8deg"
+                rotation-per-second="6deg"
                 interaction-prompt="none"
                 disable-zoom
                 touch-action="pan-y"
@@ -169,7 +181,7 @@
                 shadow-softness="0.9"
                 exposure="1.08"
                 environment-image="neutral"
-                camera-orbit="30deg 72deg 105%"
+                camera-orbit="25deg 72deg 108%"
                 min-camera-orbit="auto 25deg 55%"
                 max-camera-orbit="auto 155deg 220%"
                 min-field-of-view="20deg"
@@ -180,22 +192,66 @@
                   <span class="model-poster__orb"></span>
                 </div>
               </model-viewer>
-
-              <div class="model-status" id="modelStatus" role="status" aria-live="polite">
-                <span class="model-status__dot" aria-hidden="true"></span>
-                <span id="modelStatusText">Loading 3D model…</span>
-              </div>
+              <span class="person-model__label">Darren</span>
             </div>
-            <p class="model-caption">Drag to explore</p>
+
+            <div class="person-model person-model--heath" data-model-person="heath">
+              <model-viewer
+                id="heathModel"
+                class="hero-model"
+                src="assets/FixedHeath.glb"
+                alt="Interactive 3D model of Heath Lyon."
+                loading="lazy"
+                reveal="auto"
+                camera-controls
+                auto-rotate
+                auto-rotate-delay="1400"
+                rotation-per-second="6deg"
+                interaction-prompt="none"
+                disable-zoom
+                touch-action="pan-y"
+                shadow-intensity="0.7"
+                shadow-softness="0.9"
+                exposure="1.08"
+                environment-image="neutral"
+                camera-orbit="-25deg 72deg 108%"
+                min-camera-orbit="auto 25deg 55%"
+                max-camera-orbit="auto 155deg 220%"
+                min-field-of-view="20deg"
+                max-field-of-view="55deg"
+                interpolation-decay="90"
+              >
+                <div class="model-poster" slot="poster" aria-hidden="true">
+                  <span class="model-poster__orb"></span>
+                </div>
+              </model-viewer>
+              <span class="person-model__label">Heath</span>
+            </div>
+
+            <div class="model-status" id="modelStatus" role="status" aria-live="polite">
+              <span class="model-status__dot" aria-hidden="true"></span>
+              <span id="modelStatusText">Loading 3D models…</span>
+            </div>
+            <p class="model-caption">Hover a profile · drag the focused model</p>
           </div>
 
-          <article class="about-person about-person--heath" data-reveal="person-right" data-reveal-delay="360">
+          <article
+            class="about-person about-person--heath magnetic"
+            data-person="heath"
+            data-reveal="person-right"
+            data-reveal-delay="360"
+            tabindex="0"
+            role="button"
+            aria-pressed="false"
+            aria-controls="heathModel"
+          >
             <span class="about-line" aria-hidden="true"></span>
             <p class="about-role">Co-founder</p>
             <h3 class="about-name">Heath Lyon</h3>
             <p>
               Creative, technically minded, and detail-oriented, Heath combines web design expertise with professional video production experience. He brings a strong visual eye, practical problem-solving skills, and a passion for creating polished digital experiences that feel both artistic and purposeful.
             </p>
+            <span class="about-profile-hint">Hover or tap to focus Heath</span>
           </article>
         </div>
       </div>
