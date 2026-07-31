@@ -30,7 +30,9 @@
     density: 1.18,
     maxFps: 30,
     maxDpr: 1.25,
-    interactionRadius: 205,
+    interactionRadius: 250,
+    cursorPullStrength: 1.85,
+    cursorSwirlStrength: 1.45,
     movingStarFraction: 0.32,
     fastStarFraction: 0.045,
     colorShiftAmount: 0.14,
@@ -485,8 +487,12 @@
           if (proximity > 0) {
             const eased = proximity * proximity * (3 - 2 * proximity);
             const magneticBoost = 0.58 + pointer.magneticStrength * 0.42;
-            const pull = eased * magneticBoost * (0.0065 + star.depth * 0.0085);
-            const swirl = eased * (0.0017 + star.depth * 0.0025);
+            const pull =
+              eased * magneticBoost * (0.0065 + star.depth * 0.0085) *
+              BACKGROUND_SETTINGS.cursorPullStrength;
+            const swirl =
+              eased * (0.0017 + star.depth * 0.0025) *
+              BACKGROUND_SETTINGS.cursorSwirlStrength;
 
             x += dx * pull - dy * swirl;
             y += dy * pull + dx * swirl;
@@ -871,7 +877,7 @@
 
     const submitButton = form.querySelector('button[type="submit"]');
     const buttonLabel = submitButton?.querySelector(".button-label");
-    const endpoint = "https://formspree.io/f/xlgqoejy";
+    const endpoint = "https://formsubmit.co/ajax/darrenheathwebdev@gmail.com";
 
     const setStatus = (text, state = "") => {
       message.textContent = text;
@@ -917,6 +923,31 @@
     });
   }
 
+
+  function initFooterMetadata() {
+    const yearElement = document.getElementById("copyrightYear");
+    const lastEditedElement = document.getElementById("lastEdited");
+
+    if (yearElement) {
+      yearElement.textContent = String(new Date().getFullYear());
+    }
+
+    if (!lastEditedElement) return;
+
+    const parsedDate = new Date(document.lastModified);
+    if (Number.isNaN(parsedDate.getTime())) return;
+
+    lastEditedElement.dateTime = parsedDate.toISOString();
+    lastEditedElement.textContent = new Intl.DateTimeFormat("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short"
+    }).format(parsedDate);
+  }
+
   function initSite() {
     initModelViewers();
     initProfileModelFocus();
@@ -926,6 +957,7 @@
     initShootingStar();
     initMagneticInteractions();
     initContactForm();
+    initFooterMetadata();
   }
 
   if (document.readyState === "loading") {
